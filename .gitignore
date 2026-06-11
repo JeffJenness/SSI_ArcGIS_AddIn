@@ -14,3 +14,6 @@
 
 # ArcGIS Pro test project (scratch, not part of the add-in)
 Test_SSI_ArcGIS_Addin/
+
+# Photoshop icon sources (the exported .png files are what the add-in uses)
+*.psd

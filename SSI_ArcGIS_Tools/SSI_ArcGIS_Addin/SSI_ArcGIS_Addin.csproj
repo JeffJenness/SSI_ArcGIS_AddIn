@@ -11,11 +11,9 @@
     <None Remove="Config.daml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Config.daml" />    
-    <Content Include="Images\AddInDesktop16.png" />
-    <Content Include="Images\AddInDesktop32.png" />
-    <Content Include="DarkImages\AddInDesktop16.png" />
-    <Content Include="DarkImages\AddInDesktop32.png" />    
+    <Content Include="Config.daml" />
+    <Content Include="Images\*.png" />
+    <Content Include="DarkImages\*.png" />
   </ItemGroup>
   <ItemGroup>
     <!-- Deploy the defaults file geodatabase alongside the add-in so it is

@@ -39,8 +39,8 @@
                 caption="Load Springs"
                 className="LoadSpringsFeatureClassButton"
                 loadOnClick="true"
-                smallImage="Images\AddInDesktop16.png"
-                largeImage="Images\AddInDesktop32.png"
+                smallImage="Images\Springs_Single_16.png"
+                largeImage="Images\Springs_Single_32.png"
                 keytip="LS">
           <tooltip heading="Load Springs Feature Class">
             Loads the Springs feature class (World_Springs) into the active map. Enabled only when a map view is active.<disabledText />
@@ -50,8 +50,8 @@
                 caption="Inventory Level"
                 className="InventoryLevelButton"
                 loadOnClick="true"
-                smallImage="Images\AddInDesktop16.png"
-                largeImage="Images\AddInDesktop32.png"
+                smallImage="Images\Inventory_Level_16.png"
+                largeImage="Images\Inventory_Level_32.png"
                 keytip="IL">
           <tooltip heading="Inventory Level">
             Loads the Springs feature class into the active map, symbolized by inventory level. Enabled only when a map view is active.<disabledText />
