@@ -18,6 +18,14 @@
     <Content Include="DarkImages\AddInDesktop32.png" />    
   </ItemGroup>
   <ItemGroup>
+    <!-- Deploy the defaults file geodatabase alongside the add-in so it is
+         extracted next to the assembly at run time. Lock files are excluded. -->
+    <Content Include="..\SSI_Defaults.gdb\**\*" Exclude="..\SSI_Defaults.gdb\**\*.lock">
+      <Link>SSI_Defaults.gdb\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Properties\launchSettings.json" />
   </ItemGroup>
   <ItemGroup>
