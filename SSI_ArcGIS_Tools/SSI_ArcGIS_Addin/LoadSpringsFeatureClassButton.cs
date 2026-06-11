@@ -2,10 +2,10 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using ArcGIS.Core.CIM;
 using ArcGIS.Core.Data;
 using ArcGIS.Desktop.Catalog;
 using ArcGIS.Desktop.Core;
-using ArcGIS.Desktop.Editing;
 using ArcGIS.Desktop.Framework.Contracts;
 using ArcGIS.Desktop.Framework.Dialogs;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
@@ -112,8 +112,36 @@ namespace SSI_ArcGIS_Addin
             using (FeatureClass featureClass = geodatabase.OpenDataset<FeatureClass>(featureClassName))
             {
                 var layerParams = new FeatureLayerCreationParams(featureClass);
-                LayerFactory.Instance.CreateLayer<FeatureLayer>(layerParams, map);
+                FeatureLayer featureLayer = LayerFactory.Instance.CreateLayer<FeatureLayer>(layerParams, map);
+
+                ApplySpringsSymbology(featureLayer);
             }
+        }
+
+        /// <summary>
+        /// Symbology applied to the Springs layer, hard-coded as the CIM symbol
+        /// reference JSON (a single blue circle marker) exported from the
+        /// original World_Springs.lyrx. Hard-coding avoids any dependency on an
+        /// external .lyrx file at run time.
+        /// </summary>
+        private const string SpringsSymbolJson = """
+        {"type":"CIMSymbolReference","symbol":{"type":"CIMPointSymbol","symbolLayers":[{"type":"CIMVectorMarker","enable":true,"anchorPoint":{"x":0,"y":0,"z":0},"anchorPointUnits":"Relative","dominantSizeAxis3D":"Y","size":6,"billboardMode3D":"FaceNearPlane","frame":{"xmin":-5,"ymin":-5,"xmax":5,"ymax":5},"markerGraphics":[{"type":"CIMMarkerGraphic","geometry":{"curveRings":[[[0,5],{"a":[[0,5],[1.3804943107526663e-15,0],0,1]}]]},"symbol":{"type":"CIMPolygonSymbol","symbolLayers":[{"type":"CIMSolidStroke","enable":true,"capStyle":"Round","joinStyle":"Round","lineStyle3D":"Strip","miterLimit":10,"width":0.5,"height3D":1,"anchor3D":"Center","color":{"type":"CIMRGBColor","colorSpace":{"type":"CIMICCColorSpace","url":"sRGB IEC61966-2.1"},"values":[190,232,255,100]}},{"type":"CIMSolidFill","enable":true,"color":{"type":"CIMRGBColor","colorSpace":{"type":"CIMICCColorSpace","url":"sRGB IEC61966-2.1"},"values":[0,77,168,100]}}],"angleAlignment":"Map"}}],"scaleSymbolsProportionally":true,"respectFrame":true}],"haloSize":1,"scaleX":1,"angleAlignment":"Display"}}
+        """;
+
+        /// <summary>
+        /// Applies the hard-coded Springs symbology to the given feature layer.
+        /// Runs on the MCT.
+        /// </summary>
+        private static void ApplySpringsSymbology(FeatureLayer featureLayer)
+        {
+            if (featureLayer == null)
+            {
+                return;
+            }
+
+            CIMSymbolReference symbolReference = CIMSymbolReference.FromJson(SpringsSymbolJson);
+            var renderer = new CIMSimpleRenderer { Symbol = symbolReference };
+            featureLayer.SetRenderer(renderer);
         }
 
         /// <summary>
@@ -203,6 +231,12 @@ namespace SSI_ArcGIS_Addin
         /// <summary>
         /// Writes the given feature class path to the "Value" field of the
         /// "Springs Feature Class" row in the defaults table. Runs on the MCT.
+        ///
+        /// The defaults geodatabase is opened directly through the Geodatabase
+        /// API and is not part of any map, so edits are written straight to disk
+        /// via Row.Store(). (An EditOperation would route through the Pro edit
+        /// session and only reach disk on "Save Edits", which is not what we
+        /// want for a configuration value.)
         /// </summary>
         private static void UpdateSpringsFeatureClassPath(string newPath)
         {
@@ -218,28 +252,17 @@ namespace SSI_ArcGIS_Addin
                 };
 
                 int updated = 0;
-                var editOperation = new EditOperation { Name = $"Update {SpringsAnalysisType} path" };
-                editOperation.Callback(context =>
+                using (RowCursor cursor = table.Search(queryFilter, false))
                 {
-                    using (RowCursor cursor = table.Search(queryFilter, false))
+                    while (cursor.MoveNext())
                     {
-                        while (cursor.MoveNext())
+                        using (Row row = cursor.Current)
                         {
-                            using (Row row = cursor.Current)
-                            {
-                                row[ValueField] = newPath;
-                                row.Store();
-                                context.Invalidate(row);
-                                updated++;
-                            }
+                            row[ValueField] = newPath;
+                            row.Store();
+                            updated++;
                         }
                     }
-                }, table);
-
-                if (!editOperation.Execute())
-                {
-                    throw new InvalidOperationException(
-                        $"Failed to update the defaults table: {editOperation.ErrorMessage}");
                 }
 
                 if (updated == 0)
