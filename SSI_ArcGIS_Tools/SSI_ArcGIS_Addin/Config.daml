@@ -19,17 +19,14 @@
 
   <modules>
     <insertModule id="SSI_ArcGIS_Addin_Module" className="Module1" autoLoad="false" caption="Module1">
-      <!-- uncomment to have the control hosted on a separate tab-->
       <tabs>
-        <!--<tab id="SSI_ArcGIS_Addin_Tab1" caption="New Tab">
+        <tab id="SSI_ArcGIS_Addin_Tab1" caption="SSI">
           <group refID="SSI_ArcGIS_Addin_Group1"/>
-        </tab>-->
+        </tab>
       </tabs>
-              
+
       <groups>
-        <!-- comment this out if you have no controls on the Addin tab to avoid
-              an empty group-->
-        <group id="SSI_ArcGIS_Addin_Group1" caption="Group 1" appearsOnAddInTab="true">
+        <group id="SSI_ArcGIS_Addin_Group1" caption="SSI Data">
           <!-- host controls within groups -->
           <button refID="SSI_ArcGIS_Addin_LoadSpringsFeatureClass" size="large" />
         </group>
