@@ -29,6 +29,7 @@
         <group id="SSI_ArcGIS_Addin_Group1" caption="SSI Data">
           <!-- host controls within groups -->
           <button refID="SSI_ArcGIS_Addin_LoadSpringsFeatureClass" size="large" />
+          <button refID="SSI_ArcGIS_Addin_InventoryLevel" size="large" />
         </group>
       </groups>
       
@@ -43,6 +44,17 @@
                 keytip="LS">
           <tooltip heading="Load Springs Feature Class">
             Loads the Springs feature class (World_Springs) into the active map. Enabled only when a map view is active.<disabledText />
+          </tooltip>
+        </button>
+        <button id="SSI_ArcGIS_Addin_InventoryLevel"
+                caption="Inventory Level"
+                className="InventoryLevelButton"
+                loadOnClick="true"
+                smallImage="Images\AddInDesktop16.png"
+                largeImage="Images\AddInDesktop32.png"
+                keytip="IL">
+          <tooltip heading="Inventory Level">
+            Loads the Springs feature class into the active map, symbolized by inventory level. Enabled only when a map view is active.<disabledText />
           </tooltip>
         </button>
       </controls>
