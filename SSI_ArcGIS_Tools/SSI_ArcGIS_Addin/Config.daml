@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ArcGIS defaultAssembly="SSI_ArcGIS_Addin.dll"
+        defaultNamespace="SSI_ArcGIS_Addin"
+        xmlns="http://schemas.esri.com/DADF/Registry"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://schemas.esri.com/DADF/Registry file:///C:/Program%20Files/ArcGIS/Pro/bin/ArcGIS.Desktop.Framework.xsd">
+
+  <AddInInfo id="{738e31ff-cf24-451e-88f9-2e82c4fc833f}" version="1.0" desktopVersion="3.7.1901" product="ArcGISPro">
+    <Name>SSI_ArcGIS_Addin</Name>   
+    <Description>SSI_ArcGIS_Addin description</Description>
+    <Image>Images\AddinDesktop32.png</Image>
+    <Author>jeffj</Author>
+    <Company>Acme</Company>
+    <Date>6/11/2026 9:23:34 AM</Date>
+    <Subject>Framework</Subject>
+    <!-- Note subject can be one or more of these topics:
+                    Content, Framework, Editing, Geodatabase, Geometry, Geoprocessing, Layouts, Map Authoring, Map Exploration -->
+  </AddInInfo>
+
+  <modules>
+    <insertModule id="SSI_ArcGIS_Addin_Module" className="Module1" autoLoad="false" caption="Module1">
+      <!-- uncomment to have the control hosted on a separate tab-->
+      <tabs>
+        <!--<tab id="SSI_ArcGIS_Addin_Tab1" caption="New Tab">
+          <group refID="SSI_ArcGIS_Addin_Group1"/>
+        </tab>-->
+      </tabs>
+              
+      <groups>
+        <!-- comment this out if you have no controls on the Addin tab to avoid
+              an empty group-->
+        <group id="SSI_ArcGIS_Addin_Group1" caption="Group 1" appearsOnAddInTab="true">
+          <!-- host controls within groups -->
+          <button refID="SSI_ArcGIS_Addin_LoadSpringsFeatureClass" size="large" />
+        </group>
+      </groups>
+      
+      <controls>
+        <!-- add your controls here -->
+        <button id="SSI_ArcGIS_Addin_LoadSpringsFeatureClass"
+                caption="Load Springs"
+                className="LoadSpringsFeatureClassButton"
+                loadOnClick="true"
+                smallImage="Images\AddInDesktop16.png"
+                largeImage="Images\AddInDesktop32.png"
+                keytip="LS">
+          <tooltip heading="Load Springs Feature Class">
+            Loads the Springs feature class (World_Springs) into the active map. Enabled only when a map view is active.<disabledText />
+          </tooltip>
+        </button>
+      </controls>
+      
+    </insertModule>
+  </modules>
+</ArcGIS>

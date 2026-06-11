@@ -1,0 +1,13 @@
+# .NET build output
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio
+.vs/
+*.user
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# File geodatabase lock files
+*.lock
