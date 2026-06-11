@@ -428,8 +428,8 @@ namespace JennessentOps
       dblMidpointX = double.NaN;
       dblMidpointY = double.NaN;
       double dblMinX = dblEnvelope[0];
-      double dblMaxX = dblEnvelope[1];
-      double dblMinY = dblEnvelope[2];
+      double dblMinY = dblEnvelope[1];
+      double dblMaxX = dblEnvelope[2];
       double dblMaxY = dblEnvelope[3];
 
       if (double.IsNaN(dblMinX) || double.IsNaN(dblMaxX) || double.IsNaN(dblMinY) || double.IsNaN(dblMaxY)) { return new double[] { double.NaN, double.NaN }; }
@@ -1216,7 +1216,7 @@ namespace JennessentOps
     /// </summary>
     public static bool SegmentIntersectsRectangle(double[][,] dblLine1, double[] dblEnvelope, out bool booFullyContained)
     {
-      return SegmentIntersectsRectangle(dblLine1[0][0, 0], dblLine1[0][0, 1], dblLine1[0][1, 0], dblLine1[0][1, 1], dblEnvelope[0], dblEnvelope[1], dblEnvelope[2], dblEnvelope[3], out booFullyContained);
+      return SegmentIntersectsRectangle(dblLine1[0][0, 0], dblLine1[0][0, 1], dblLine1[0][1, 0], dblLine1[0][1, 1], dblEnvelope[0], dblEnvelope[2], dblEnvelope[1], dblEnvelope[3], out booFullyContained);
     }
     /// <summary>
     /// Given a segment, or coordinates of the start- and end-points of a segment, and a rectangular envelope, returns boolean if segment intersects or touches rectangle edge.<br></br>
@@ -1468,11 +1468,11 @@ namespace JennessentOps
           {
             dblSegExtentDotSegExtent = (dblSegExtentX * dblSegExtentX) + (dblSegExtentY * dblSegExtentY);
             dblSegExtentDotSegExtentRecip = 1 / dblSegExtentDotSegExtent;
-            //dblEdgeExtentDotSegExtent = (dblEdgeExtentX * dblSegExtentX) + (dblEdgeExtentX * dblSegExtentY);
+            double dblEdgeExtentDotSegExtent = (dblEdgeExtentX * dblSegExtentX) + (dblEdgeExtentY * dblSegExtentY);
             dblT0 = Math.Round(((dblQmPX * dblSegExtentX) + (dblQmPY * dblSegExtentY)) * dblSegExtentDotSegExtentRecip, 14);
-            dblT1 = Math.Round(dblT0 + (dblSegExtentDotSegExtent * dblSegExtentDotSegExtentRecip), 14);
+            dblT1 = Math.Round(dblT0 + (dblEdgeExtentDotSegExtent * dblSegExtentDotSegExtentRecip), 14);
 
-            if (dblSegExtentDotSegExtent < 0)        // THEN LINES COLLINEAR, BUT GOING IN OPPOSITE DIRECTIONS
+            if (dblEdgeExtentDotSegExtent < 0)        // THEN LINES COLLINEAR, BUT GOING IN OPPOSITE DIRECTIONS
             {
               double dblTemp = dblT0;
               dblT0 = dblT1;
@@ -1749,6 +1749,20 @@ namespace JennessentOps
 
       double dblRange = NiceNumber(dblConvertMaximum - dblConvertMinimum, false);
       dblIntervalToFill = NiceNumber(dblRange / (double)(lngMinIntervals - 1), true);
+      if (dblIntervalToFill <= 0 || double.IsNaN(dblIntervalToFill) || double.IsInfinity(dblIntervalToFill))
+      {
+        booSucceeded = false;
+        strTextValuesToFill = new string[0];
+        dblGraphMinToFill = double.NaN;
+        dblGraphMaxToFill = double.NaN;
+        dblConvertedMinVal = double.NaN;
+        dblConvertedMaxVal = double.NaN;
+        strConvertedMinText = "";
+        strConvertedMaxText = "";
+        dblConvertedIntervalVal = double.NaN;
+        strConvertedIntervalText = "";
+        return new double[0];
+      }
       double dblTempGraphMin = Math.Floor(dblConvertMinimum / dblIntervalToFill) * dblIntervalToFill;
       double dblTempGraphMax = Math.Ceiling(dblConvertMaximum / dblIntervalToFill) * dblIntervalToFill;
       int intNFrac = Math.Max((int)-Math.Floor(LogX(10, dblIntervalToFill)), 0);
@@ -2839,7 +2853,7 @@ namespace JennessentOps
 
       dblCircularVariance = 1 - dblMeanResultantLength;
       dblAngularVariance = 2 * dblCircularVariance;
-      dblCircularStandDev = Math.Sqrt(-2 * (Math.Log(dblMeanResultantLength)));
+      dblCircularStandDev = Math.Sqrt(-2 * (Math.Log(Math.Min(1d, dblMeanResultantLength))));
       dblAngularDeviation = Math.Sqrt(dblAngularVariance);
       dblKappa = ReturnVonMisesKappa(dblMeanResultantLength, dblCompassDirsAndWeights.GetLength(0), true);
       double dblMeanDir = ForceAzimuthToCorrectRange(RadToDeg(Math.Atan2(dblSumS, dblSumC)));
@@ -2882,7 +2896,7 @@ namespace JennessentOps
 
       dblCircularVariance = 1 - dblMeanResultantLength;
       dblAngularVariance = 2 * dblCircularVariance;
-      dblCircularStandDev = Math.Sqrt(-2 * (Math.Log(dblMeanResultantLength)));
+      dblCircularStandDev = Math.Sqrt(-2 * (Math.Log(Math.Min(1d, dblMeanResultantLength))));
       dblAngularDeviation = Math.Sqrt(dblAngularVariance);
       dblKappa = ReturnVonMisesKappa(dblMeanResultantLength, dblCompassDirs.Length, true);
       double dblMeanDir = ForceAzimuthToCorrectRange(RadToDeg(Math.Atan2(dblSumS, dblSumC)));
@@ -2923,7 +2937,7 @@ namespace JennessentOps
 
       dblCircularVariance = 1 - dblMeanResultantLength;
       dblAngularVariance = 2 * dblCircularVariance;
-      dblCircularStandDev = Math.Sqrt(-2 * (Math.Log(dblMeanResultantLength)));
+      dblCircularStandDev = Math.Sqrt(-2 * (Math.Log(Math.Min(1d, dblMeanResultantLength))));
       dblAngularDeviation = Math.Sqrt(dblAngularVariance);
       dblKappa = ReturnVonMisesKappa(dblMeanResultantLength, dblCompassDirs.Length, true);
       double dblMeanDir = RadToDeg(Math.Atan2(dblSumS, dblSumC));
@@ -3369,7 +3383,7 @@ namespace JennessentOps
       double dblLenPQ = Math.Pow(Math.Pow(dblPX - dblQX, 2) + Math.Pow(dblPY - dblQY, 2), 0.5);
       double dblLenQR = Math.Pow(Math.Pow(dblQX - dblRX, 2) + Math.Pow(dblQY - dblRY, 2), 0.5);
       double dblLenRP = Math.Pow(Math.Pow(dblRX - dblPX, 2) + Math.Pow(dblRY - dblPY, 2), 0.5);
-      double dblReturn = RadToDeg(Math.Acos(((Math.Pow(dblLenPQ, 2) + Math.Pow(dblLenQR, 2) - Math.Pow(dblLenRP, 2)) / (2 * dblLenPQ * dblLenQR))));
+      double dblReturn = RadToDeg(Math.Acos(Math.Clamp((Math.Pow(dblLenPQ, 2) + Math.Pow(dblLenQR, 2) - Math.Pow(dblLenRP, 2)) / (2 * dblLenPQ * dblLenQR), -1d, 1d)));
       dblAngleDev = 180 - dblReturn;
       return dblReturn;
     }
@@ -4069,6 +4083,7 @@ namespace JennessentOps
       double dblRunningX = 0;
       double dblRunningY = 0;
       double dblCoordCount = dblCoordinates.GetLength(0);
+      if (dblCoordCount == 0) { dblCentroidX = double.NaN; dblCentroidY = double.NaN; return; }
       for (int i = 0; i < dblCoordCount; i++)
       {
         dblRunningX += dblCoordinates[i, 0];
@@ -4087,6 +4102,7 @@ namespace JennessentOps
       double dblRunningY = 0;
       double dblRunningZ = 0;
       double dblCoordCount = dblCoordinates.GetLength(0);
+      if (dblCoordCount == 0) { dblCentroidX = double.NaN; dblCentroidY = double.NaN; return; }
       for (int i = 0; i < dblCoordCount; i++)
       {
         SphericalLatLongToCart(dblCoordinates[i, 0], dblCoordinates[i, 1], out double dblX, out double dblY, out double dblZ);
@@ -4107,6 +4123,7 @@ namespace JennessentOps
       double dblRunningY = 0;
       double dblRunningZ = 0;
       double dblCoordCount = dblCoordinates.GetLength(0);
+      if (dblCoordCount == 0) { dblCentroidX = double.NaN; dblCentroidY = double.NaN; return; }
       for (int i = 0; i < dblCoordCount; i++)
       {
         SpheroidalLatLongToCart(dblCoordinates[i, 0], dblCoordinates[i, 1], out double dblX, out double dblY, out double dblZ, dblEquatorialRadius, dblPolarRadius);
@@ -4412,16 +4429,15 @@ namespace JennessentOps
         SigmaCompare = dblSigma;
         dblSigma = (dblS / (B * dblA)) + DeltaSigma;                                                                  // [7]
 
-
-        if (lngIterations == 0)
-        {
-          Console.WriteLine("Vincenty Formula failed to converge!");
-          dblDestLat = double.NaN;
-          dblDestLong = double.NaN;
-          dblDestAz = double.NaN;
-          return;
-        }
         lngIterations--;
+      }
+
+      if (Math.Abs(dblSigma - SigmaCompare) > 0.000000000001)   // failed to converge within the iteration limit
+      {
+        dblDestLat = double.NaN;
+        dblDestLong = double.NaN;
+        dblDestAz = double.NaN;
+        return;
       }
 
       cos2SigmaM = Math.Cos(2 * Sigma1 + dblSigma);
@@ -5070,8 +5086,8 @@ namespace JennessentOps
       //}
 
       //AB2 =MOD(E2*1440+V2+4*$B$4-60*$B$5,1440)
-      double dbl_AB_True_Solar_Time_Min = (dbl_E_Time_PastLocalMidnight * 1440d + dbl_V_EqOfTime_Minutes +
-          4d * dblLongitude - 60d * dblHoursFromGreenwich) % 1440d;
+      double dbl_AB_True_Solar_Time_Min = ((dbl_E_Time_PastLocalMidnight * 1440d + dbl_V_EqOfTime_Minutes +
+          4d * dblLongitude - 60d * dblHoursFromGreenwich) % 1440d + 1440d) % 1440d;
       //   Debug.Print "dbl_AB_True_Solar_Time_Min = " & Format(dbl_AB_True_Solar_Time_Min, "0.000000000000")
 
       //AC2 =IF(AB2/4<0,AB2/4+180,AB2/4-180)
@@ -5080,8 +5096,8 @@ namespace JennessentOps
 
       //AD2 =DEGREES(ACOS(SIN(RADIANS($B$3))*SIN(RADIANS(T2))+COS(RADIANS($B$3))*COS(RADIANS(T2))*COS(RADIANS(AC2))))
       // ZENITH ANGLE IS MEASURED DOWN FROM STRAIGHT UP
-      double dbl_AD_Solar_Zenith_Angle_Deg = RadToDeg(Math.Acos(Math.Sin(DegToRad(dblLatitude)) * Math.Sin(DegToRad(dbl_T_Sun_Declin_Deg)) +
-            Math.Cos(DegToRad(dblLatitude)) * Math.Cos(DegToRad(dbl_T_Sun_Declin_Deg)) * Math.Cos(DegToRad(dbl_AC_Hour_Angle_Deg))));
+      double dbl_AD_Solar_Zenith_Angle_Deg = RadToDeg(Math.Acos(Math.Clamp(Math.Sin(DegToRad(dblLatitude)) * Math.Sin(DegToRad(dbl_T_Sun_Declin_Deg)) +
+            Math.Cos(DegToRad(dblLatitude)) * Math.Cos(DegToRad(dbl_T_Sun_Declin_Deg)) * Math.Cos(DegToRad(dbl_AC_Hour_Angle_Deg)), -1d, 1d)));
       //   Debug.Print "dbl_AD_Solar_Zenith_Angle_Deg = " & Format(dbl_AD_Solar_Zenith_Angle_Deg, "0.000000000000")
 
       //AE2 =90-AD2
@@ -5138,14 +5154,14 @@ namespace JennessentOps
         dblA = Math.Sin(DegToRad(dblLatitude)) * Math.Cos(DegToRad(dbl_AD_Solar_Zenith_Angle_Deg)) -
               Math.Sin(DegToRad(dbl_T_Sun_Declin_Deg));
         dblB = Math.Cos(DegToRad(dblLatitude)) * Math.Sin(DegToRad(dbl_AD_Solar_Zenith_Angle_Deg));
-        dbl_AH_Solar_Azimuth_Angle_Deg_CW_From_N = (RadToDeg(Math.Acos(dblA / dblB)) + 180) % 360d;
+        dbl_AH_Solar_Azimuth_Angle_Deg_CW_From_N = (RadToDeg(Math.Acos(Math.Clamp(dblA / dblB, -1d, 1d))) + 180) % 360d;
       }
       else
       {
         // MOD(540-DEGREES(ACOS(((SIN(RADIANS($B$3))*COS(RADIANS(AD2)))-SIN(RADIANS(T2)))/(COS(RADIANS($B$3))*SIN(RADIANS(AD2))))),360))
         dblA = (Math.Sin(DegToRad(dblLatitude)) * Math.Cos(DegToRad(dbl_AD_Solar_Zenith_Angle_Deg))) - Math.Sin(DegToRad(dbl_T_Sun_Declin_Deg));
         dblB = Math.Cos(DegToRad(dblLatitude)) * Math.Sin(DegToRad(dbl_AD_Solar_Zenith_Angle_Deg));
-        dbl_AH_Solar_Azimuth_Angle_Deg_CW_From_N = (540 - RadToDeg(Math.Acos(dblA / dblB))) % 360d;
+        dbl_AH_Solar_Azimuth_Angle_Deg_CW_From_N = (540 - RadToDeg(Math.Acos(Math.Clamp(dblA / dblB, -1d, 1d)))) % 360d;
         //   Debug.Print "dbl_AH_Solar_Azimuth_Angle_Deg_CW_From_N = " & Format(dbl_AH_Solar_Azimuth_Angle_Deg_CW_From_N, "0.000000000000")
       }
       //if (boo_W_Crashed)
@@ -5394,8 +5410,8 @@ namespace JennessentOps
       }
 
       //AB2 =MOD(E2*1440+V2+4*$B$4-60*$B$5,1440)
-      double dbl_AB_True_Solar_Time_Min = (dbl_E_Time_PastLocalMidnight * 1440d + dbl_V_EqOfTime_Minutes +
-          4d * dblLongitude - 60d * dblHoursFromGreenwich) % 1440d;
+      double dbl_AB_True_Solar_Time_Min = ((dbl_E_Time_PastLocalMidnight * 1440d + dbl_V_EqOfTime_Minutes +
+          4d * dblLongitude - 60d * dblHoursFromGreenwich) % 1440d + 1440d) % 1440d;
       //   Debug.Print "dbl_AB_True_Solar_Time_Min = " & Format(dbl_AB_True_Solar_Time_Min, "0.000000000000")
 
       //AC2 =IF(AB2/4<0,AB2/4+180,AB2/4-180)
@@ -5404,8 +5420,8 @@ namespace JennessentOps
 
       //AD2 =DEGREES(ACOS(SIN(RADIANS($B$3))*SIN(RADIANS(T2))+COS(RADIANS($B$3))*COS(RADIANS(T2))*COS(RADIANS(AC2))))
       // ZENITH ANGLE IS MEASURED DOWN FROM STRAIGHT UP
-      double dbl_AD_Solar_Zenith_Angle_Deg = RadToDeg(Math.Acos(Math.Sin(DegToRad(dblLatitude)) * Math.Sin(DegToRad(dbl_T_Sun_Declin_Deg)) +
-            Math.Cos(DegToRad(dblLatitude)) * Math.Cos(DegToRad(dbl_T_Sun_Declin_Deg)) * Math.Cos(DegToRad(dbl_AC_Hour_Angle_Deg))));
+      double dbl_AD_Solar_Zenith_Angle_Deg = RadToDeg(Math.Acos(Math.Clamp(Math.Sin(DegToRad(dblLatitude)) * Math.Sin(DegToRad(dbl_T_Sun_Declin_Deg)) +
+            Math.Cos(DegToRad(dblLatitude)) * Math.Cos(DegToRad(dbl_T_Sun_Declin_Deg)) * Math.Cos(DegToRad(dbl_AC_Hour_Angle_Deg)), -1d, 1d)));
       //   Debug.Print "dbl_AD_Solar_Zenith_Angle_Deg = " & Format(dbl_AD_Solar_Zenith_Angle_Deg, "0.000000000000")
 
       //AE2 =90-AD2
@@ -5462,14 +5478,14 @@ namespace JennessentOps
         dblA = Math.Sin(DegToRad(dblLatitude)) * Math.Cos(DegToRad(dbl_AD_Solar_Zenith_Angle_Deg)) -
               Math.Sin(DegToRad(dbl_T_Sun_Declin_Deg));
         dblB = Math.Cos(DegToRad(dblLatitude)) * Math.Sin(DegToRad(dbl_AD_Solar_Zenith_Angle_Deg));
-        dbl_AH_Solar_Azimuth_Angle_Deg_CW_From_N = (RadToDeg(Math.Acos(dblA / dblB)) + 180) % 360d;
+        dbl_AH_Solar_Azimuth_Angle_Deg_CW_From_N = (RadToDeg(Math.Acos(Math.Clamp(dblA / dblB, -1d, 1d))) + 180) % 360d;
       }
       else
       {
         // MOD(540-DEGREES(ACOS(((SIN(RADIANS($B$3))*COS(RADIANS(AD2)))-SIN(RADIANS(T2)))/(COS(RADIANS($B$3))*SIN(RADIANS(AD2))))),360))
         dblA = (Math.Sin(DegToRad(dblLatitude)) * Math.Cos(DegToRad(dbl_AD_Solar_Zenith_Angle_Deg))) - Math.Sin(DegToRad(dbl_T_Sun_Declin_Deg));
         dblB = Math.Cos(DegToRad(dblLatitude)) * Math.Sin(DegToRad(dbl_AD_Solar_Zenith_Angle_Deg));
-        dbl_AH_Solar_Azimuth_Angle_Deg_CW_From_N = (540 - RadToDeg(Math.Acos(dblA / dblB))) % 360d;
+        dbl_AH_Solar_Azimuth_Angle_Deg_CW_From_N = (540 - RadToDeg(Math.Acos(Math.Clamp(dblA / dblB, -1d, 1d)))) % 360d;
         //   Debug.Print "dbl_AH_Solar_Azimuth_Angle_Deg_CW_From_N = " & Format(dbl_AH_Solar_Azimuth_Angle_Deg_CW_From_N, "0.000000000000")
       }
       if (boo_W_Crashed)
@@ -5630,7 +5646,7 @@ namespace JennessentOps
       dblLat = dblLat1 - dblLat2;
       dblLong = DegToRad(dblLong1 - dblLong2);
       dblTemp = Math.Pow(Math.Sin(dblLat / 2), 2) + Math.Cos(dblLat1) * Math.Cos(dblLat2) * Math.Pow(Math.Sin(dblLong / 2), 2);
-      dblReturn = (2 * Math.Atan2(Math.Pow(dblTemp, 0.5), Math.Pow(1 - dblTemp, 0.5))) * dblRadius;
+      dblReturn = (2 * Math.Atan2(Math.Pow(dblTemp, 0.5), Math.Pow(Math.Max(0d, 1 - dblTemp), 0.5))) * dblRadius;
 
       return dblReturn;
     }
@@ -5651,7 +5667,7 @@ namespace JennessentOps
       dblLat = dblLat1 - dblLat2;
       dblLong = DegToRad(dblLong1 - dblLong2);
       dblTemp = Math.Pow(Math.Sin(dblLat / 2), 2) + Math.Cos(dblLat1) * Math.Cos(dblLat2) * Math.Pow(Math.Sin(dblLong / 2), 2);
-      dblReturn = (2 * Math.Atan2(Math.Pow(dblTemp, 0.5), Math.Pow(1 - dblTemp, 0.5))) * dblRadius;
+      dblReturn = (2 * Math.Atan2(Math.Pow(dblTemp, 0.5), Math.Pow(Math.Max(0d, 1 - dblTemp), 0.5))) * dblRadius;
 
       double PX = DegToRad(dblLong1);
       double QX = DegToRad(dblLong2);
@@ -5778,14 +5794,14 @@ namespace JennessentOps
         // VINCENTY WRITES EQUATION AS "L = dblLambda - ((1 - C)...
         dblLambda = dblL + ((1 - C) * f * sinAlpha * (Sigma + dblLambda1a));                          //  [11]
 
-        if (lngIterations == 0)
-        {
-          Console.WriteLine("Vincenty Formula failed to converge!");
-          dblStartBearing = Double.NaN;
-          dblEndBearing = Double.NaN;
-          return 0;
-        }
         lngIterations--;
+      }
+
+      if (Math.Abs(dblLambda - dblLambdaComp) > 0.000000000001)   // failed to converge within the iteration limit
+      {
+        dblStartBearing = Double.NaN;
+        dblEndBearing = Double.NaN;
+        return 0;
       }
 
       double uSq = (cosSqAlpha * (Math.Pow(A, 2) - Math.Pow(B, 2))) / Math.Pow(B, 2);
@@ -5883,12 +5899,12 @@ namespace JennessentOps
         // VINCENTY WRITES EQUATION AS "L = dblLambda - ((1 - C)...
         dblLambda = l + ((1 - C) * f * sinAlpha * (Sigma + dblLambda1a));                          //  [11]
 
-        if (lngIterations == 0)
-        {
-          Console.WriteLine("Vincenty Formula failed to converge!");
-          return 0;
-        }
         lngIterations--;
+      }
+
+      if (Math.Abs(dblLambda - dblLambdaComp) > 0.000000000001)   // failed to converge within the iteration limit
+      {
+        return 0;
       }
 
       double uSq = (cosSqAlpha * (Math.Pow(A, 2) - Math.Pow(B, 2))) / Math.Pow(B, 2);
@@ -5997,7 +6013,7 @@ namespace JennessentOps
       double dblLong = DegToRad(dblPointAX - dblPointBX);
       //double dblLong2 = -dblLong;
       double dblTemp = Math.Pow((Math.Sin(dblLat / 2)), 2) + Math.Cos(dblLat1) * Math.Cos(dblLat2) * Math.Pow((Math.Sin(dblLong / 2)), 2);
-      double dblAB = 2 * Math.Atan2(Math.Sqrt(dblTemp), Math.Sqrt(1 - dblTemp));
+      double dblAB = 2 * Math.Atan2(Math.Sqrt(dblTemp), Math.Sqrt(Math.Max(0d, 1 - dblTemp)));
       double dblAzimuthAB = Math.Atan2(Math.Sin(-dblLong) * Math.Cos(dblLat2),
             Math.Cos(dblLat1) * Math.Sin(dblLat2) - Math.Sin(dblLat1) * Math.Cos(dblLat2) * Math.Cos(-dblLong));
 
@@ -6006,14 +6022,14 @@ namespace JennessentOps
       dblLat = dblLat1 - dblLat2;
       dblLong = DegToRad(dblPointBX - dblPointCX);
       dblTemp = Math.Pow((Math.Sin(dblLat / 2)), 2) + Math.Cos(dblLat1) * Math.Cos(dblLat2) * Math.Pow((Math.Sin(dblLong / 2)), 2);
-      double dblBC = 2 * Math.Atan2(Math.Sqrt(dblTemp), Math.Sqrt(1 - dblTemp));
+      double dblBC = 2 * Math.Atan2(Math.Sqrt(dblTemp), Math.Sqrt(Math.Max(0d, 1 - dblTemp)));
 
       dblLat1 = DegToRad(dblPointCY);
       dblLat2 = DegToRad(dblPointAY);
       dblLat = dblLat1 - dblLat2;
       dblLong = DegToRad(dblPointCX - dblPointAX);
       dblTemp = Math.Pow((Math.Sin(dblLat / 2)), 2) + Math.Cos(dblLat1) * Math.Cos(dblLat2) * Math.Pow((Math.Sin(dblLong / 2)), 2);
-      double dblCA = 2 * Math.Atan2(Math.Sqrt(dblTemp), Math.Sqrt(1 - dblTemp));
+      double dblCA = 2 * Math.Atan2(Math.Sqrt(dblTemp), Math.Sqrt(Math.Max(0d, 1 - dblTemp)));
       double dblAzimuthAC = Math.Atan2(Math.Sin(dblLong) * Math.Cos(dblLat1),
             Math.Cos(dblLat2) * Math.Sin(dblLat1) - Math.Sin(dblLat2) * Math.Cos(dblLat1) * Math.Cos(dblLong));
 
