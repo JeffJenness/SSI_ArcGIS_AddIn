@@ -7,10 +7,10 @@
 
   <AddInInfo id="{738e31ff-cf24-451e-88f9-2e82c4fc833f}" version="1.0" desktopVersion="3.7.1901" product="ArcGISPro">
     <Name>SSI_ArcGIS_Addin</Name>   
-    <Description>SSI_ArcGIS_Addin description</Description>
+    <Description>Tools to aid in Springs Stewardship GIS projects.</Description>
     <Image>Images\AddinDesktop32.png</Image>
-    <Author>jeffj</Author>
-    <Company>Acme</Company>
+    <Author>Jeff Jenness</Author>
+    <Company>Springs Stewardship Institute</Company>
     <Date>6/11/2026 9:23:34 AM</Date>
     <Subject>Framework</Subject>
     <!-- Note subject can be one or more of these topics:

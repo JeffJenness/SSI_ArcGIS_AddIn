@@ -17,3 +17,10 @@ Test_SSI_ArcGIS_Addin/
 
 # Photoshop icon sources (the exported .png files are what the add-in uses)
 *.psd
+
+# Code-signing certificate material (never commit private keys)
+*.pfx
+*.p12
+*.snk
+*.cer
+*.crt
