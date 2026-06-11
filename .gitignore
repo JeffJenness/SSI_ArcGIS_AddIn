@@ -11,3 +11,6 @@
 
 # File geodatabase lock files
 *.lock
+
+# ArcGIS Pro test project (scratch, not part of the add-in)
+Test_SSI_ArcGIS_Addin/
