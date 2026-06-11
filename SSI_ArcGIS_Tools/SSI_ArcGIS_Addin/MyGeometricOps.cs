@@ -1536,7 +1536,7 @@ namespace JennessentOps
                 dblIntersectX = dblEdgeStartX;
                 dblIntersectY = dblEdgeStartY;
               }
-              else if (dblU == 1)      //  THEN 1000% ALONG EDGE
+              else if (dblU == 1)      //  THEN 100% ALONG EDGE
               {
                 JenIntersectType = JenSegmentIntersectTypes.ENUM_IntersectEdgeEndpoint;
                 dblIntersectX = dblEdgeEndX;
@@ -2761,8 +2761,12 @@ namespace JennessentOps
     public static void ConvertDDtoDMS(double dblDD, out long lngDegrees, out long lngMinutes, out double dblSeconds)
     {
       lngDegrees = (long)dblDD;
-      lngMinutes = (long)((Math.Abs(dblDD - (double)lngDegrees)) * 60L);
-      dblSeconds = ((Math.Abs(dblDD - (double)lngDegrees) * 60d) - (double)lngMinutes) * 60d;
+      double dblRemainderMinutes = Math.Abs(dblDD - (double)lngDegrees) * 60d;
+      lngMinutes = (long)dblRemainderMinutes;
+      dblSeconds = (dblRemainderMinutes - (double)lngMinutes) * 60d;
+      // Guard against floating-point rounding pushing seconds to 60 (and minutes to 60).
+      if (dblSeconds >= 60d) { dblSeconds -= 60d; lngMinutes++; }
+      if (lngMinutes >= 60) { lngMinutes -= 60; lngDegrees += (dblDD < 0) ? -1 : 1; }
       //long lngMinutes;
       //long lngDegrees;
       //double dblSeconds;
@@ -3099,6 +3103,7 @@ namespace JennessentOps
       JenSphericalMethod jenMethod, double dblFlatOrientationCCWFromHorizontal = 0, long lngPointCount = 360,
       double dblSemiMajorAxis = 6378137.000, double dblSemiMinorAxis = 6356752.31424518, double dblSphereRadius = 6371000.79000915)
     {
+      if (lngPointCount <= 0) { lngPointCount = 360; }
       double dblInterval = 360d / Convert.ToDouble(lngPointCount);
       double[][,] dblEllipse = new double[1][,];
       dblEllipse[0] = new double[lngPointCount + 1, 2];
@@ -3319,6 +3324,7 @@ namespace JennessentOps
     public static double[][,] CreateCircleAroundPoint(double dblOriginX, double dblOriginY, double dblRadius, long lngPointCount, JenSphericalMethod jenMethod,
       double dblSemiMajorAxis = 6378137.000, double dblSemiMinorAxis = 6356752.31424518, double dblSphereRadius = 6371000.79000915)
     {
+      if (lngPointCount <= 0) { lngPointCount = 360; }
       double dblInterval = 360d / Convert.ToDouble(lngPointCount);
       double[][,] dblCircle = new double[1][,];
       dblCircle[0] = new double[lngPointCount + 1, 2];
@@ -4512,10 +4518,6 @@ namespace JennessentOps
             //SpheroidalPolylineMidpointNumbers(dblPolylineCoords, 300, false, out dblOutX, out dblOutY, out dblLength);
             //Console.WriteLine("...[" + dblOutX.ToString("0.000000") + ", " + dblOutY.ToString("0.000000") + "], Length = " + dblLength.ToString("0.000000") + "]");
 
-            //            1.Use double.IsNaN for NaN Checks
-            //Instead of dblLength != double.NaN, use!double.IsNaN(dblLength) for correct NaN comparison.
-            //2.Reduce Redundant Assignments
-            //You do not need to set dblLength, dblAz1, dblStartLong, and dblStartLat to double.NaN before the search loop. They will be set if a segment is found.
             //3.Use Early Return for Edge Cases
             //If the polyline is empty or has no segments, return early with NaN outputs.
             //4.Improve Variable Naming and Comments
