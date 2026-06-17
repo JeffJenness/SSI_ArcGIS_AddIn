@@ -113,15 +113,18 @@ namespace SSI_ArcGIS_Addin
             Step(progressor);
 
             // 6) Optional summary feature class (one row per spring).
+            string summaryName = null;
+            IReadOnlyList<string> summaryDatasets = null;
             if (_p.CreateSummary)
             {
                 ThrowIfCancelled(progressor);
                 SetProgress(progressor, "Building summary feature class...");
-                string summaryName = _p.OutputName + "_Summary";
+                summaryName = _p.OutputName + "_Summary";
                 SpringsSummaryExporter.SummaryResult summary =
                     SpringsSummaryExporter.Export(outputGdb, _p.OutputName, summaryName, progressor);
                 if (summary.Created)
                 {
+                    summaryDatasets = summary.CreatedDatasets;
                     report.AppendLine(
                         $"- {summary.Name}: {summary.RecordCount:N0} summary record(s)" +
                         $" + {summary.SupportingTableCount} supporting table(s)" +
@@ -138,8 +141,14 @@ namespace SSI_ArcGIS_Addin
             {
                 ThrowIfCancelled(progressor);
                 SetProgress(progressor, "Writing dataset metadata...");
-                report.AppendLine(
-                    SpringsMetadataWriter.Write(outputGdb, outputGdbPath, _p.OutputName, created, progressor));
+                var metadataDatasets = new List<string>(created);
+                if (summaryDatasets != null)
+                {
+                    metadataDatasets.AddRange(summaryDatasets);
+                }
+
+                report.AppendLine(SpringsMetadataWriter.Write(
+                    outputGdb, outputGdbPath, _p.OutputName, summaryName, metadataDatasets, progressor));
             }
 
             stopwatch.Stop();

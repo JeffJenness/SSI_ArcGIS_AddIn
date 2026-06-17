@@ -58,13 +58,19 @@
         </StackPanel>
 
         <TextBlock Grid.Row="6" Grid.Column="0" Text="Exclude surveys&#x0a;for springs (SQL):" Margin="0,0,8,8" />
-        <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,0,8" Height="44"
+        <TextBox Grid.Row="6" Grid.Column="1" Margin="0,0,8,8" Height="44"
                  AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
                  Text="{Binding ExcludeSitesWhereClause, UpdateSourceTrigger=PropertyChanged}" />
+        <Button Grid.Row="6" Grid.Column="2" Content="Build..." VerticalAlignment="Top" Margin="0,0,0,8"
+                Padding="8,2" Click="OnBuildSitesQuery"
+                ToolTip="Build a query on the springs layer; surveys for matching springs are excluded." />
 
         <TextBlock Grid.Row="7" Grid.Column="0" Text="Exclude surveys&#x0a;(SQL):" Margin="0,0,8,8" />
-        <TextBox Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,0,0" Height="44"
+        <TextBox Grid.Row="7" Grid.Column="1" Margin="0,0,8,0" Height="44"
                  AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
                  Text="{Binding ExcludeSurveysWhereClause, UpdateSourceTrigger=PropertyChanged}" />
+        <Button Grid.Row="7" Grid.Column="2" Content="Build..." VerticalAlignment="Top" Margin="0,0,0,0"
+                Padding="8,2" Click="OnBuildSurveysQuery"
+                ToolTip="Build a query on the Surveys table; matching surveys are excluded." />
     </Grid>
 </UserControl>

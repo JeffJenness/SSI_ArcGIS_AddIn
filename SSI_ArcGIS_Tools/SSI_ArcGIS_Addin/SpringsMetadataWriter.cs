@@ -25,10 +25,11 @@ namespace SSI_ArcGIS_Addin
     internal static class SpringsMetadataWriter
     {
         private const string SpringsKey = "<SPRINGS>";
+        private const string SummaryKey = "<SUMMARY>";
         private const string ExportDateToken = "{EXPORT_DATE}";
 
         internal static string Write(
-            Geodatabase outputGdb, string gdbPath, string springsName,
+            Geodatabase outputGdb, string gdbPath, string springsName, string summaryName,
             IEnumerable<string> createdDatasets, CancelableProgressor progressor)
         {
             CommonMeta common;
@@ -54,7 +55,16 @@ namespace SSI_ArcGIS_Addin
                     throw new OperationCanceledException();
                 }
 
-                string key = dataset.Equals(springsName, StringComparison.OrdinalIgnoreCase) ? SpringsKey : dataset;
+                string key = dataset;
+                if (dataset.Equals(springsName, StringComparison.OrdinalIgnoreCase))
+                {
+                    key = SpringsKey;
+                }
+                else if (summaryName != null && dataset.Equals(summaryName, StringComparison.OrdinalIgnoreCase))
+                {
+                    key = SummaryKey;
+                }
+
                 datasets.TryGetValue(key, out DatasetMeta dsMeta);
 
                 try
@@ -231,7 +241,14 @@ namespace SSI_ArcGIS_Addin
                 if (!string.IsNullOrWhiteSpace(field.Description)) SetText(attr, "attrdef", Clean(field.Description));
                 if (!string.IsNullOrWhiteSpace(field.Source)) SetText(attr, "attrdefs", Clean(field.Source));
 
-                if (domains.TryGetValue($"{key}:{fieldName}", out DomainMap map))
+                // The summary FC reuses the springs lookups for its copied coded
+                // fields, so fall back to the <SPRINGS> domain mapping.
+                if (!domains.TryGetValue($"{key}:{fieldName}", out DomainMap map) && key == SummaryKey)
+                {
+                    domains.TryGetValue($"{SpringsKey}:{fieldName}", out map);
+                }
+
+                if (map != null)
                 {
                     AddDomain(attr, map, lookupCache, gdb);
                 }

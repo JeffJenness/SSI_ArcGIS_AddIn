@@ -84,6 +84,7 @@ namespace SSI_ArcGIS_Addin
             internal long RecordCount { get; init; }
             internal int SupportingTableCount { get; init; }
             internal int RelationshipClassCount { get; init; }
+            internal IReadOnlyList<string> CreatedDatasets { get; init; }
         }
 
         internal static SummaryResult Export(
@@ -141,6 +142,17 @@ namespace SSI_ArcGIS_Addin
                 // and surveys via Site_GlobalID / Survey_GlobalID.
                 var supporting = BuildSupportingTables(gdb, summaryFeatureClassName, context, progressor);
 
+                string b = summaryFeatureClassName;
+                var createdDatasets = new List<string>
+                {
+                    b,
+                    b + "_Surveys",
+                    b + "_Solar_by_Site_Append",
+                    b + "_TaxaVert_by_Site", b + "_TaxaVert_by_Survey",
+                    b + "_TaxaInvert_by_Site", b + "_TaxaInvert_by_Survey",
+                    b + "_TaxaFlora_by_Site", b + "_TaxaFlora_by_Survey",
+                };
+
                 return new SummaryResult
                 {
                     Name = summaryFeatureClassName,
@@ -148,6 +160,7 @@ namespace SSI_ArcGIS_Addin
                     RecordCount = written,
                     SupportingTableCount = supporting.Tables,
                     RelationshipClassCount = supporting.RelationshipClasses,
+                    CreatedDatasets = createdDatasets,
                 };
             }
         }
