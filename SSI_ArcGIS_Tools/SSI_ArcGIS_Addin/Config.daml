@@ -5,7 +5,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://schemas.esri.com/DADF/Registry file:///C:/Program%20Files/ArcGIS/Pro/bin/ArcGIS.Desktop.Framework.xsd">
 
-  <AddInInfo id="{738e31ff-cf24-451e-88f9-2e82c4fc833f}" version="1.3.4" desktopVersion="3.7.1901" product="ArcGISPro">
+  <AddInInfo id="{738e31ff-cf24-451e-88f9-2e82c4fc833f}" version="1.4.0" desktopVersion="3.7.1901" product="ArcGISPro">
     <Name>SSI_ArcGIS_Addin</Name>   
     <Description>Tools to aid in Springs Stewardship GIS projects.</Description>
     <Image>Images\AddInIcon_32.png</Image>
@@ -33,6 +33,7 @@
           <button refID="SSI_ArcGIS_Addin_InventoryLevel" size="large" />
         </group>
         <group id="SSI_ArcGIS_Addin_Group2" caption="SSI Tools">
+          <button refID="SSI_ArcGIS_Addin_ExportGpx" size="large" />
           <button refID="SSI_ArcGIS_Addin_ExportSubsetOfSprings" size="large" />
         </group>
       </groups>
@@ -61,14 +62,25 @@
             Loads the Springs feature class into the active map, symbolized by inventory level. Enabled only when a map view is active.<disabledText />
           </tooltip>
         </button>
+        <button id="SSI_ArcGIS_Addin_ExportGpx"
+                caption="Export GPX"
+                className="ExportGpxButton"
+                loadOnClick="true"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonGreen16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonGreen32.png"
+                keytip="EG">
+          <tooltip heading="Export GPX">
+            Exports the selected springs of a springs layer to a GPX file, formatted the same way as the Export Geodatabase tool's GPX output. Enabled only when a map view is active.<disabledText />
+          </tooltip>
+        </button>
         <button id="SSI_ArcGIS_Addin_ExportSubsetOfSprings"
-                caption="Export Subset of Springs"
+                caption="Export Geodatabase"
                 className="ExportSubsetOfSpringsButton"
                 loadOnClick="true"
                 smallImage="Images\Export_GDB_16.png"
                 largeImage="Images\Export_GDB_32.png"
                 keytip="ES">
-          <tooltip heading="Export Subset of Springs">
+          <tooltip heading="Export Geodatabase">
             Exports the selected springs and all related tables into a new file geodatabase, rebuilding the relationship classes. Enabled only when a map view is active.<disabledText />
           </tooltip>
         </button>

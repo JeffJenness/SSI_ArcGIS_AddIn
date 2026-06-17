@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
-using ArcGIS.Core.CIM;
 using ArcGIS.Core.Data;
 using ArcGIS.Desktop.Core;
 using ArcGIS.Desktop.Framework;
@@ -32,13 +30,13 @@ namespace SSI_ArcGIS_Addin
             try
             {
                 // 1) Gather candidate point feature layers (and their selection counts) on the MCT.
-                List<SpringsLayerItem> layers = await QueuedTask.Run(GatherSpringsLayers);
+                List<SpringsLayerItem> layers = await QueuedTask.Run(SpringsLayers.GatherPointSpringsLayers);
                 if (layers.Count == 0)
                 {
                     MessageBox.Show(
                         "The active map has no springs point layers to export." + Environment.NewLine +
                         "A layer must be a point feature class with both a 'SiteID' and a 'SiteName' field.",
-                        "Export Subset of Springs");
+                        "Export Geodatabase");
                     return;
                 }
 
@@ -101,7 +99,7 @@ namespace SSI_ArcGIS_Addin
                     MessageBox.Show(
                         $"Export cancelled.{Environment.NewLine}{Environment.NewLine}" +
                         $"A partial geodatabase may remain at:{Environment.NewLine}{exporter.OutputGeodatabasePath}",
-                        "Export Subset of Springs");
+                        "Export Geodatabase");
                     return;
                 }
 
@@ -121,71 +119,13 @@ namespace SSI_ArcGIS_Addin
                     $"Export complete.{Environment.NewLine}{Environment.NewLine}" +
                     $"Geodatabase:{Environment.NewLine}{exporter.OutputGeodatabasePath}{Environment.NewLine}{Environment.NewLine}" +
                     $"Full report saved to:{Environment.NewLine}{reportPath}",
-                    "Export Subset of Springs");
+                    "Export Geodatabase");
             }
             catch (Exception ex)
             {
                 MessageBox.Show(
                     $"The subset export failed:{Environment.NewLine}{Environment.NewLine}{ex.Message}",
-                    "Export Subset of Springs");
-            }
-        }
-
-        /// <summary>
-        /// Returns the active map's point feature layers that can actually be
-        /// exported as springs — i.e. those whose feature class has both a
-        /// "SiteID" and a "SiteName" field — each with its current selection
-        /// count. Runs on the MCT.
-        /// </summary>
-        private static List<SpringsLayerItem> GatherSpringsLayers()
-        {
-            Map map = MapView.Active?.Map;
-            if (map == null)
-            {
-                return new List<SpringsLayerItem>();
-            }
-
-            var items = new List<SpringsLayerItem>();
-            foreach (FeatureLayer layer in map.GetLayersAsFlattenedList().OfType<FeatureLayer>())
-            {
-                if (layer.ShapeType != esriGeometryType.esriGeometryPoint)
-                {
-                    continue;
-                }
-
-                if (!HasSpringsKeyFields(layer))
-                {
-                    continue;
-                }
-
-                long count = layer.GetSelection()?.GetCount() ?? 0;
-                items.Add(new SpringsLayerItem(layer, count));
-            }
-
-            return items;
-        }
-
-        /// <summary>
-        /// True if the layer's feature class has both the "SiteID" and "SiteName"
-        /// fields (a minimal check that it is a springs feature class). Any failure
-        /// to open the source is treated as "not a springs layer". Runs on the MCT.
-        /// </summary>
-        private static bool HasSpringsKeyFields(FeatureLayer layer)
-        {
-            try
-            {
-                using FeatureClass featureClass = layer.GetFeatureClass();
-                if (featureClass == null)
-                {
-                    return false;
-                }
-
-                FeatureClassDefinition definition = featureClass.GetDefinition();
-                return definition.FindField("SiteID") >= 0 && definition.FindField("SiteName") >= 0;
-            }
-            catch (Exception)
-            {
-                return false;
+                    "Export Geodatabase");
             }
         }
 

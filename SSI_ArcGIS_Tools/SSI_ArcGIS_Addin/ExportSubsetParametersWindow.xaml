@@ -3,7 +3,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:ArcGIS.Desktop.Framework.Controls;assembly=ArcGIS.Desktop.Framework"
                     xmlns:local="clr-namespace:SSI_ArcGIS_Addin"
-                    Title="Export Subset of Springs"
+                    Title="Export Geodatabase"
                     Width="560" Height="500" MinWidth="480" MinHeight="460"
                     WindowStartupLocation="CenterOwner"
                     ResizeMode="CanResize" ShowInTaskbar="False">

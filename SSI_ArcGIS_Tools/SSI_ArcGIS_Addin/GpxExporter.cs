@@ -9,6 +9,7 @@ using System.Xml.Linq;
 using ArcGIS.Core.Data;
 using ArcGIS.Desktop.Core.Geoprocessing;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
+using ArcGIS.Desktop.Mapping;
 
 namespace SSI_ArcGIS_Addin
 {
@@ -40,23 +41,66 @@ namespace SSI_ArcGIS_Addin
                     return "- GPX export skipped: springs feature class has no SiteID field.";
                 }
 
-                // FeaturesToGPX handles geometry + the SiteID name key only. The
-                // elevation/date/description fields are intentionally omitted (the
-                // tool is type-strict); they are written during post-processing.
-                var values = Geoprocessing.MakeValueArray(inFeatures, gpxPath, data.NameKeyField);
-                IGPResult result = await Geoprocessing.ExecuteToolAsync("conversion.FeaturesToGPX", values);
-                if (result.IsFailed)
-                {
-                    return $"- GPX export failed: {string.Join("; ", result.Messages.Select(m => m.Text))}";
-                }
-
-                int enriched = await Task.Run(() => WriteWaypointElements(gpxPath, data.Waypoints));
-                return $"- GPX file: {gpxPath} ({enriched:N0} waypoint(s))";
+                return await RunFeaturesToGpxAsync(inFeatures, gpxPath, data);
             }
             catch (Exception ex)
             {
                 return $"- GPX export failed: {ex.Message}";
             }
+        }
+
+        /// <summary>
+        /// Exports the springs of an in-map feature layer (honoring its current
+        /// selection) to a GPX file, formatted identically to the Export
+        /// Geodatabase tool's GPX output.
+        /// </summary>
+        internal static async Task<string> ExportFromLayerAsync(FeatureLayer layer, string gpxPath)
+        {
+            try
+            {
+                GpxData data = await QueuedTask.Run(() =>
+                {
+                    using FeatureClass featureClass = layer.GetFeatureClass();
+                    QueryFilter filter = null;
+                    Selection selection = layer.GetSelection();
+                    if (selection != null && selection.GetCount() > 0)
+                    {
+                        filter = new QueryFilter { ObjectIDs = selection.GetObjectIDs() };
+                    }
+
+                    return ReadGpxData(featureClass, filter);
+                });
+
+                if (data == null || string.IsNullOrEmpty(data.NameKeyField))
+                {
+                    return "- GPX export skipped: springs feature class has no SiteID field.";
+                }
+
+                // Pass the layer itself so FeaturesToGPX honors its selection.
+                return await RunFeaturesToGpxAsync(layer, gpxPath, data);
+            }
+            catch (Exception ex)
+            {
+                return $"- GPX export failed: {ex.Message}";
+            }
+        }
+
+        /// <summary>
+        /// Runs the native FeaturesToGPX (geometry + the SiteID name key only; the
+        /// type-strict elevation/date/description fields are written during
+        /// post-processing) and then enriches each waypoint.
+        /// </summary>
+        private static async Task<string> RunFeaturesToGpxAsync(object inFeatures, string gpxPath, GpxData data)
+        {
+            var values = Geoprocessing.MakeValueArray(inFeatures, gpxPath, data.NameKeyField);
+            IGPResult result = await Geoprocessing.ExecuteToolAsync("conversion.FeaturesToGPX", values);
+            if (result.IsFailed)
+            {
+                return $"- GPX export failed: {string.Join("; ", result.Messages.Select(m => m.Text))}";
+            }
+
+            int enriched = await Task.Run(() => WriteWaypointElements(gpxPath, data.Waypoints));
+            return $"- GPX file: {gpxPath} ({enriched:N0} waypoint(s))";
         }
 
         /// <summary>
@@ -77,6 +121,18 @@ namespace SSI_ArcGIS_Addin
             }
 
             using (featureClass)
+            {
+                return ReadGpxData(featureClass, null);
+            }
+        }
+
+        /// <summary>
+        /// Reads, keyed by SiteID text, all values written to each GPX waypoint
+        /// from the given feature class (optionally filtered to a selection).
+        /// Runs on the MCT.
+        /// </summary>
+        private static GpxData ReadGpxData(FeatureClass featureClass, QueryFilter filter)
+        {
             {
                 FeatureClassDefinition def = featureClass.GetDefinition();
                 var data = new GpxData
@@ -101,7 +157,7 @@ namespace SSI_ArcGIS_Addin
                 int url = def.FindField("CastImageHyperlink");
                 int type = def.FindField("SpringType1");
 
-                using RowCursor cursor = featureClass.Search(null, false);
+                using RowCursor cursor = featureClass.Search(filter, false);
                 while (cursor.MoveNext())
                 {
                     using Row row = cursor.Current;
