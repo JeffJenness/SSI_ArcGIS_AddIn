@@ -12,8 +12,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config.daml" />
-    <Content Include="Images\*.png" />
+    <Content Include="Images\*.png" Exclude="Images\resize_grip.png" />
     <Content Include="DarkImages\*.png" />
+    <!-- The resize grip is loaded by WPF as an embedded resource (pack URI),
+         not as add-in content, so it must use the Resource build action. -->
+    <Resource Include="Images\resize_grip.png" />
   </ItemGroup>
   <ItemGroup>
     <!-- Deploy the defaults file geodatabase alongside the add-in so it is

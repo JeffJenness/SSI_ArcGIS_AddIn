@@ -1,0 +1,64 @@
+<UserControl x:Class="SSI_ArcGIS_Addin.ExportSubsetParametersView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="540" d:DesignHeight="380">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Springs layer:" Margin="0,0,8,8" VerticalAlignment="Center" />
+        <ComboBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,0,8"
+                  ItemsSource="{Binding Layers}" SelectedItem="{Binding SelectedLayer}"
+                  DisplayMemberPath="DisplayName" />
+
+        <CheckBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,0,10"
+                  Content="Export selected features only"
+                  IsChecked="{Binding SelectedFeaturesOnly}" />
+
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Output folder:" Margin="0,0,8,8" VerticalAlignment="Center" />
+        <TextBox Grid.Row="2" Grid.Column="1" Margin="0,0,8,8"
+                 Text="{Binding OutputFolder, UpdateSourceTrigger=PropertyChanged}" />
+        <Button Grid.Row="2" Grid.Column="2" Content="Browse..." Margin="0,0,0,8" Padding="10,2"
+                Command="{Binding BrowseFolderCommand}" />
+
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Geodatabase name:" Margin="0,0,8,8" VerticalAlignment="Center" />
+        <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,0,2"
+                 Text="{Binding OutputName, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBlock Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,0,8"
+                   FontSize="10" Foreground="Gray"
+                   Text="No spaces; letters, digits and underscores only. '.gdb' is added automatically." />
+
+        <StackPanel Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,0,10">
+            <CheckBox Content="Trim text fields to longest value"
+                      IsChecked="{Binding TrimStrings}" />
+            <CheckBox Margin="0,6,0,0"
+                      Content="Also create summary feature class (one row per spring)"
+                      IsChecked="{Binding CreateSummary}" />
+        </StackPanel>
+
+        <TextBlock Grid.Row="6" Grid.Column="0" Text="Exclude surveys&#x0a;for springs (SQL):" Margin="0,0,8,8" />
+        <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,0,8" Height="44"
+                 AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
+                 Text="{Binding ExcludeSitesWhereClause, UpdateSourceTrigger=PropertyChanged}" />
+
+        <TextBlock Grid.Row="7" Grid.Column="0" Text="Exclude surveys&#x0a;(SQL):" Margin="0,0,8,8" />
+        <TextBox Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,0,0" Height="44"
+                 AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
+                 Text="{Binding ExcludeSurveysWhereClause, UpdateSourceTrigger=PropertyChanged}" />
+    </Grid>
+</UserControl>

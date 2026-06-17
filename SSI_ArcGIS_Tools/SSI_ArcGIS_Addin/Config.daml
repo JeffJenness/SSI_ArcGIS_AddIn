@@ -22,6 +22,7 @@
       <tabs>
         <tab id="SSI_ArcGIS_Addin_Tab1" caption="SSI">
           <group refID="SSI_ArcGIS_Addin_Group1"/>
+          <group refID="SSI_ArcGIS_Addin_Group2"/>
         </tab>
       </tabs>
 
@@ -30,6 +31,9 @@
           <!-- host controls within groups -->
           <button refID="SSI_ArcGIS_Addin_LoadSpringsFeatureClass" size="large" />
           <button refID="SSI_ArcGIS_Addin_InventoryLevel" size="large" />
+        </group>
+        <group id="SSI_ArcGIS_Addin_Group2" caption="SSI Tools">
+          <button refID="SSI_ArcGIS_Addin_ExportSubsetOfSprings" size="large" />
         </group>
       </groups>
       
@@ -55,6 +59,17 @@
                 keytip="IL">
           <tooltip heading="Inventory Level">
             Loads the Springs feature class into the active map, symbolized by inventory level. Enabled only when a map view is active.<disabledText />
+          </tooltip>
+        </button>
+        <button id="SSI_ArcGIS_Addin_ExportSubsetOfSprings"
+                caption="Export Subset of Springs"
+                className="ExportSubsetOfSpringsButton"
+                loadOnClick="true"
+                smallImage="Images\Export_GDB_16.png"
+                largeImage="Images\Export_GDB_32.png"
+                keytip="ES">
+          <tooltip heading="Export Subset of Springs">
+            Exports the selected springs and all related tables into a new file geodatabase, rebuilding the relationship classes. Enabled only when a map view is active.<disabledText />
           </tooltip>
         </button>
       </controls>
