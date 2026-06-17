@@ -43,5 +43,11 @@ namespace SSI_ArcGIS_Addin
         /// (<see cref="OutputName"/> + "_Summary") in the output geodatabase.
         /// </summary>
         internal bool CreateSummary { get; init; }
+
+        /// <summary>
+        /// When true, also export the subset springs to a GPX file
+        /// (<see cref="OutputName"/> + ".gpx") next to the output geodatabase.
+        /// </summary>
+        internal bool CreateGpx { get; init; }
     }
 }

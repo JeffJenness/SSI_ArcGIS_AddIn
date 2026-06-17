@@ -52,7 +52,8 @@ namespace SSI_ArcGIS_Addin
 
                 var viewModel = new ExportSubsetParametersViewModel(
                     layers, defaultFolder,
-                    Module1.LastSelectedFeaturesOnly, Module1.LastTrimStrings, Module1.LastCreateSummary);
+                    Module1.LastSelectedFeaturesOnly, Module1.LastTrimStrings,
+                    Module1.LastCreateSummary, Module1.LastCreateGpx);
                 var window = new ExportSubsetParametersWindow(viewModel)
                 {
                     Owner = FrameworkApplication.Current.MainWindow,
@@ -67,6 +68,7 @@ namespace SSI_ArcGIS_Addin
                 Module1.LastSelectedFeaturesOnly = viewModel.SelectedFeaturesOnly;
                 Module1.LastTrimStrings = viewModel.TrimStrings;
                 Module1.LastCreateSummary = viewModel.CreateSummary;
+                Module1.LastCreateGpx = viewModel.CreateGpx;
 
                 // 3) Resolve the chosen layer to thread-agnostic parameters on the MCT.
                 ExportSubsetParameters parameters = await QueuedTask.Run(() =>
@@ -104,6 +106,14 @@ namespace SSI_ArcGIS_Addin
 
                 // Remember the folder for next time (session + persisted with project).
                 Module1.LastOutputFolder = parameters.OutputFolder;
+
+                // 6) Optional GPX export via the native FeaturesToGPX tool.
+                if (parameters.CreateGpx)
+                {
+                    string gpxLine = await GpxExporter.ExportAsync(
+                        exporter.OutputGeodatabasePath, parameters.OutputName);
+                    report += Environment.NewLine + gpxLine;
+                }
 
                 string reportPath = WriteReport(exporter.OutputGeodatabasePath, report);
                 MessageBox.Show(
@@ -215,6 +225,7 @@ namespace SSI_ArcGIS_Addin
                 OutputName = vm.OutputName.Trim(),
                 TrimStrings = vm.TrimStrings,
                 CreateSummary = vm.CreateSummary,
+                CreateGpx = vm.CreateGpx,
             };
         }
 

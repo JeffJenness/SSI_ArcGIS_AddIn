@@ -45,13 +45,14 @@ namespace SSI_ArcGIS_Addin
         private string _outputName = DefaultNameBase;
         private bool _trimStrings;
         private bool _createSummary;
+        private bool _createGpx;
         private string _excludeSitesWhereClause = string.Empty;
         private string _excludeSurveysWhereClause = string.Empty;
         private string _validationMessage = string.Empty;
 
         internal ExportSubsetParametersViewModel(
             IEnumerable<SpringsLayerItem> layers, string defaultFolder,
-            bool selectedFeaturesOnly, bool trimStrings, bool createSummary)
+            bool selectedFeaturesOnly, bool trimStrings, bool createSummary, bool createGpx)
         {
             Layers = new List<SpringsLayerItem>(layers);
             _selectedLayer = Layers.FirstOrDefault();
@@ -61,6 +62,7 @@ namespace SSI_ArcGIS_Addin
             _selectedFeaturesOnly = selectedFeaturesOnly;
             _trimStrings = trimStrings;
             _createSummary = createSummary;
+            _createGpx = createGpx;
             Validate();
         }
 
@@ -111,6 +113,12 @@ namespace SSI_ArcGIS_Addin
         {
             get => _createSummary;
             set => SetProperty(ref _createSummary, value);
+        }
+
+        public bool CreateGpx
+        {
+            get => _createGpx;
+            set => SetProperty(ref _createGpx, value);
         }
 
         public string ExcludeSitesWhereClause

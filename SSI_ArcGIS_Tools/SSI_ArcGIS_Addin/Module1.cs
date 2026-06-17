@@ -34,6 +34,7 @@ namespace SSI_ArcGIS_Addin
         private const string SelectedOnlyKey = "ExportSubset_SelectedFeaturesOnly";
         private const string TrimStringsKey = "ExportSubset_TrimStrings";
         private const string CreateSummaryKey = "ExportSubset_CreateSummary";
+        private const string CreateGpxKey = "ExportSubset_CreateGpx";
 
         /// <summary>
         /// Last-used Export Subset of Springs dialog choices. Held for the session
@@ -44,6 +45,7 @@ namespace SSI_ArcGIS_Addin
         public static bool LastSelectedFeaturesOnly { get; set; } = true;
         public static bool LastTrimStrings { get; set; }
         public static bool LastCreateSummary { get; set; }
+        public static bool LastCreateGpx { get; set; }
 
         #region Overrides
 
@@ -57,6 +59,7 @@ namespace SSI_ArcGIS_Addin
             LastSelectedFeaturesOnly = ReadBool(settings, SelectedOnlyKey, LastSelectedFeaturesOnly);
             LastTrimStrings = ReadBool(settings, TrimStringsKey, LastTrimStrings);
             LastCreateSummary = ReadBool(settings, CreateSummaryKey, LastCreateSummary);
+            LastCreateGpx = ReadBool(settings, CreateGpxKey, LastCreateGpx);
             return Task.FromResult(0);
         }
 
@@ -70,6 +73,7 @@ namespace SSI_ArcGIS_Addin
             settings.Add(SelectedOnlyKey, LastSelectedFeaturesOnly.ToString());
             settings.Add(TrimStringsKey, LastTrimStrings.ToString());
             settings.Add(CreateSummaryKey, LastCreateSummary.ToString());
+            settings.Add(CreateGpxKey, LastCreateGpx.ToString());
             return Task.FromResult(0);
         }
 

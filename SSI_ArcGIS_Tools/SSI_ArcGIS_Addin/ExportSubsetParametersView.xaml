@@ -49,6 +49,9 @@
             <CheckBox Margin="0,6,0,0"
                       Content="Also create summary feature class (one row per spring)"
                       IsChecked="{Binding CreateSummary}" />
+            <CheckBox Margin="0,6,0,0"
+                      Content="Also export springs to a GPX file"
+                      IsChecked="{Binding CreateGpx}" />
         </StackPanel>
 
         <TextBlock Grid.Row="6" Grid.Column="0" Text="Exclude surveys&#x0a;for springs (SQL):" Margin="0,0,8,8" />
