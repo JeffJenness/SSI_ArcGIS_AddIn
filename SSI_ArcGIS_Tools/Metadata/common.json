@@ -1,0 +1,19 @@
+{
+  "credits": "Springs Stewardship Institute, and SSI Collaborators.",
+  "useLimitations": "This dataset is intended for noncommercial research, planning, and conservation purposes. Contact Springs Stewardship Institute at http://springstewardshipinstitute.org/ for questions about the data. Springs Stewardship Institute maintains copyright of the schema and structure of this dataset and the larger geodatabase.  Sensitive data may not be included because such data require written permission from the owners of those data.",
+  "organization": "Springs Stewardship Institute",
+  "address": "414 North Humphreys Street",
+  "city": "Flagstaff",
+  "state": "AZ",
+  "postalCode": "86001",
+  "country": "USA",
+  "phone": "(928) 440-3191",
+  "website": "http://springstewardshipinstitute.org/",
+  "contacts": [
+    { "name": "Jeri Ledbetter", "role": "Program Manager", "email": "jeri@springstewardship.org" },
+    { "name": "Jeff Jenness", "role": "GIS Analyst", "email": "jeff@springstewardship.org" }
+  ],
+  "lineageStep": "Exported subset of springs, with associated related tables and relationship classes.",
+  "geoprocessingDescription": "Exported selected subset of the Springs Stewardship Institute springs database, with related tables and relationship classes.",
+  "exportDateFormat": "h:mm:ss 'hrs', dddd, MMMM d, yyyy"
+}

@@ -1,0 +1,2606 @@
+{
+  ":": {
+    "lookupTable": " & CStr(lngIndex + 36) & ",
+    "codeField": " & str2Quotes & ",
+    "descField": " & str2Quotes & '          ",
+    "source": " & str2Quotes & "
+  },
+  "<SPRINGS>:ChannelDynamics": {
+    "lookupTable": "tlu_channeldynamics",
+    "codeField": "ChannelDynamics",
+    "descField": "ChannelDynamicsDescr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "<SPRINGS>:SpringType1": {
+    "lookupTable": "tlu_dischargesphere",
+    "codeField": "DischargeSphere",
+    "descField": "DischargeSphereDescription",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "<SPRINGS>:FlowForceMech": {
+    "lookupTable": "tlu_flowforcemech",
+    "codeField": "FlowForceMechanism",
+    "descField": "FlorForceMechanismDescr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "<SPRINGS>:GeorefSource": {
+    "lookupTable": "tlu_georefsource",
+    "codeField": "Georef_Source",
+    "descField": "None",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "<SPRINGS>:GPS_Unit": {
+    "lookupTable": "tlu_gpsunit",
+    "codeField": "GPS_Unit",
+    "descField": "None",
+    "source": "None"
+  },
+  "<SPRINGS>:infoSource": {
+    "lookupTable": "tlu_infosource",
+    "codeField": "InfoSourceCode",
+    "descField": "InfoSourceDescr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "<SPRINGS>:LandUnit": {
+    "lookupTable": "tlu_landunit",
+    "codeField": "Ownership",
+    "descField": "OwnershipFull",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "<SPRINGS>:LCC": {
+    "lookupTable": "tlu_lcc",
+    "codeField": "lccid",
+    "descField": "lccName",
+    "source": "Landscape Conservation Cooperative Network: https://lccnetwork.org/"
+  },
+  "<SPRINGS>:LithoPrimary": {
+    "lookupTable": "tlu_lithoprimary",
+    "codeField": "LithoPrimary",
+    "descField": "None",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "<SPRINGS>:LithoSecondary": {
+    "lookupTable": "tlu_lithosecondary",
+    "codeField": "LithoSecondary",
+    "descField": "LithoSecondary_Descr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "<SPRINGS>:Sensitivity": {
+    "lookupTable": "tlu_sensitive",
+    "codeField": "Sensitive",
+    "descField": "Detail",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "<SPRINGS>:SourceGeo": {
+    "lookupTable": "tlu_sourcegeomorphology",
+    "codeField": "SourceGeomorphology",
+    "descField": "SourceGeomorphologyDescr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "<SPRINGS>:EmergenceEnvironment": {
+    "lookupTable": "view_tlu_emergenceenvironment_for_arcgis",
+    "codeField": "EmergenceEnvironment",
+    "descField": "CastEmergenceEnvironmentDesc",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tbl_flow:FlowConsistency": {
+    "lookupTable": "tlu_flowconsistency",
+    "codeField": "FlowConsistency",
+    "descField": "FlowConsistencyDescr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tbl_flow:FlowMeasureTech": {
+    "lookupTable": "tlu_flowtechnique",
+    "codeField": "FlowTechnique",
+    "descField": "None",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tbl_flow:Unmeasureable": {
+    "lookupTable": "tlu_flowunmeasurable",
+    "codeField": "Unmeasurable",
+    "descField": "None",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tbl_flow:FlowVariability": {
+    "lookupTable": "tlu_flowvariability",
+    "codeField": "FlowVariability",
+    "descField": "FlowVariabilityDescr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tbl_flow:Persistence": {
+    "lookupTable": "tlu_persistence",
+    "codeField": "Persistence",
+    "descField": "PersistenceDescr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tbl_flow:FlowRatemean": {
+    "lookupTable": "view_tlu_flowrate_for_arcgis",
+    "codeField": "CastFlowRate",
+    "descField": "FlowRateDescr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tbl_PolygonFlora:FloraCoverCode": {
+    "lookupTable": "tlu_covercodes",
+    "codeField": "CoverCode",
+    "descField": "CoverDescription",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tbl_PolygonSurvey:DischargeSphere": {
+    "lookupTable": "tlu_dischargesphere",
+    "codeField": "DischargeSphere",
+    "descField": "DischargeSphereDescription",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tbl_invertsampling:Lifestage": {
+    "lookupTable": "tlu_lifestage",
+    "codeField": "Lifestage",
+    "descField": "Lifestage_Text",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tbl_invertsampling:NativeStatus": {
+    "lookupTable": "tlu_nativestatuscodes",
+    "codeField": "NativeStatusCode",
+    "descField": "NativeStatusExplanation",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tbl_invertsampling:Method": {
+    "lookupTable": "tlu_samplingmethods",
+    "codeField": "Method",
+    "descField": "None",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tbl_PolygonSurvey:SlopeVariability": {
+    "lookupTable": "tlu_slopevariability",
+    "codeField": "SlopeVariability",
+    "descField": "None",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tbl_PolygonSurvey:SurfSubType": {
+    "lookupTable": "tlu_surfacesubtype",
+    "codeField": "SurfaceSubtype",
+    "descField": "Surface_Code",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tbl_PolygonSurvey:SurfType": {
+    "lookupTable": "tlu_surfacetype",
+    "codeField": "SurfCode",
+    "descField": "Surface_Type",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tbl_PolygonFlora:WetlandStatus": {
+    "lookupTable": "tlu_wetlandstatus_les",
+    "codeField": "WetlandCode",
+    "descField": "WetlandDescription",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tbl_VertSurvey:DetectionType": {
+    "lookupTable": "tlu_detectiontype",
+    "codeField": "DetectionType",
+    "descField": "Description",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tbl_Surveys:WQFieldDevices": {
+    "lookupTable": "tlu_measurementdevice",
+    "codeField": "MeasurementDevice",
+    "descField": "None",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tbl_WQData:CastWQParameter": {
+    "lookupTable": "view_tlu_wqparameters_for_arcgis",
+    "codeField": "CastWQParameter",
+    "descField": "WQParameterEPA",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "<SPRINGS>:SpringType2": {
+    "lookupTable": "tlu_dischargesphere",
+    "codeField": "DischargeSphere",
+    "descField": "DischargeSphereDescription",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "<SPRINGS>:SourceGeo2": {
+    "lookupTable": "tlu_sourcegeomorphology",
+    "codeField": "SourceGeomorphology",
+    "descField": "SourceGeomorphologyDescr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tbl_PolygonSurvey:SecondaryDischargeSphere": {
+    "lookupTable": "tlu_dischargesphere",
+    "codeField": "DischargeSphere",
+    "descField": "DischargeSphereDescription",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tbl_PolygonFlora:NativeStatus": {
+    "lookupTable": "tlu_nativestatuscodes",
+    "codeField": "NativeStatusCode",
+    "descField": "NativeStatusExplanation",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tbl_WQData:WQDevice": {
+    "lookupTable": "tlu_measurementdevice",
+    "codeField": "MeasurementDevice",
+    "descField": "None",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tlu_taxaflora:DefaultCoverCode": {
+    "lookupTable": "tlu_covercodes",
+    "codeField": "CoverCode",
+    "descField": "CoverDescription",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tlu_taxaflora:DefaultNativeStatus": {
+    "lookupTable": "tlu_nativestatuscodes",
+    "codeField": "NativeStatusCode",
+    "descField": "NativeStatusExplanation",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tlu_taxaflora:DefaultProtectedArea": {
+    "lookupTable": "tlu_protectedarea",
+    "codeField": "ProtectedArea",
+    "descField": "ProtectedAreaText",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tlu_taxaflora:DefaultWetlandStatus": {
+    "lookupTable": "tlu_wetlandstatus_les",
+    "codeField": "WetlandCode",
+    "descField": "Wetland_LES:WetlandDescription",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tlu_taxaflora:EndemismLevel": {
+    "lookupTable": "view_tlu_endemism_for_arcgis",
+    "codeField": "EndemismLevel",
+    "descField": "EndemismDescr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tlu_taxaflora:SpringHabitatUse": {
+    "lookupTable": "view_tlu_springmicrohabitatuse_for_arcgis",
+    "codeField": "SpringUse",
+    "descField": "SpringUseBrief:SpringUseDescr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tlu_taxaflora:SpringLifeHistory": {
+    "lookupTable": "view_tlu_springlifehistory_for_arcgis",
+    "codeField": "CastSpringLifeHistory",
+    "descField": "SpringLifeHistoryDescr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tlu_taxaflora:AquaticStatus": {
+    "lookupTable": "view_tlu_aquaticstatus_for_arcgis",
+    "codeField": "AquaticStatus",
+    "descField": "AquaticStatusDescr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tlu_taxaflora:ESAstatus": {
+    "lookupTable": "view_tlu_esastatus_for_arcgis",
+    "codeField": "ESAStatus",
+    "descField": "ESAStatusDescr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tlu_taxaflora:IUCNstatus": {
+    "lookupTable": "view_tlu_iucnstatus_for_arcgis",
+    "codeField": "IUCNstatus",
+    "descField": "IUCNtext:IUCNdescr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tlu_taxainvert:DefaultNativeStatus": {
+    "lookupTable": "tlu_nativestatuscodes",
+    "codeField": "NativeStatusCode",
+    "descField": "NativeStatusExplanation",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tlu_taxainvert:DefaultProtectedArea": {
+    "lookupTable": "tlu_protectedarea",
+    "codeField": "ProtectedArea",
+    "descField": "ProtectedAreaText",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tlu_taxainvert:EndemismLevel": {
+    "lookupTable": "view_tlu_endemism_for_arcgis",
+    "codeField": "EndemismLevel",
+    "descField": "EndemismDescr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tlu_taxainvert:SpringLifeHistory": {
+    "lookupTable": "view_tlu_springlifehistory_for_arcgis",
+    "codeField": "CastSpringLifeHistory",
+    "descField": "SpringLifeHistoryDescr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tlu_taxainvert:AquaticStatus": {
+    "lookupTable": "view_tlu_aquaticstatus_for_arcgis",
+    "codeField": "AquaticStatus",
+    "descField": "AquaticStatusDescr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tlu_taxainvert:ESAstatus": {
+    "lookupTable": "view_tlu_esastatus_for_arcgis",
+    "codeField": "ESAStatus",
+    "descField": "ESAStatusDescr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tlu_taxainvert:IUCNstatus": {
+    "lookupTable": "view_tlu_iucnstatus_for_arcgis",
+    "codeField": "IUCNstatus",
+    "descField": "IUCNtext:IUCNdescr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tlu_taxavert:EndemismLevel": {
+    "lookupTable": "view_tlu_endemism_for_arcgis",
+    "codeField": "EndemismLevel",
+    "descField": "EndemismDescr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tlu_taxavert:SpringLifeHistory": {
+    "lookupTable": "view_tlu_springlifehistory_for_arcgis",
+    "codeField": "CastSpringLifeHistory",
+    "descField": "SpringLifeHistoryDescr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tlu_taxavert:AquaticStatus": {
+    "lookupTable": "view_tlu_aquaticstatus_for_arcgis",
+    "codeField": "AquaticStatus",
+    "descField": "AquaticStatusDescr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tlu_taxavert:ESAstatus": {
+    "lookupTable": "view_tlu_esastatus_for_arcgis",
+    "codeField": "ESAStatus",
+    "descField": "ESAStatusDescr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tlu_taxavert:IUCNstatus": {
+    "lookupTable": "view_tlu_iucnstatus_for_arcgis",
+    "codeField": "IUCNstatus",
+    "descField": "IUCNtext:IUCNdescr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tbl_SEAP_Scores:Spring_dewatered_Y_N_": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Spring_dewatered_Y_N_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Aquifer_functionality": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Aquifer_functionality_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Spring_discharge": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Spring_discharge_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Flow_naturalness": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Flow_naturalness_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Flow_persistance": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Flow_persistance_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Water_quality": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Water_quality_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Algal_and_periphyton_cover": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Algal_and_periphyton_cover_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Site_obliterated_Y_N_": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Geomorphic_functionality": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Geomorphic_functionality_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Runout_channel_Geometry": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Runout_channel_Geometry_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Soil_integrity": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Soil_integrity_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Geomorphic_diversity": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Geomorphic_diversity_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Natural_physical_disturbance": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:NaturalPhysicalDisturbanceRisk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Isolation_": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Isolation_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Habitat_patch_size": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Habitat_patch_size_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Microhabitat_quality": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Microhabitat_quality_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Native_plant_ecological_role": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:NativePlantEcologicalRoleRisk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Trophic_dynamics": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Trophic_dynamics_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Native_plant_richness_diversity": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:NtvPlantRichnessDiversityRisk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Native_faunal_diversity": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Native_faunal_diversity_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Sensitive_plant_richness": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Sensitive_plant_richness_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Sensitive_faunal_richness": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Sensitive_faunal_richness_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Nonnative_plant_rarity": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Nonnative_plant_rarity_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Nonnative_faunal_rarity": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Nonnative_faunal_rarity_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Native_plant_demography": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Native_plant_demography_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Native_faunal_demography": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Native_faunal_demography_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Surface_water_quality": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Surface_water_quality_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Flow_regulation": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Flow_regulation_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Road_trail_RR_effects": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Road_trail_RR_effects_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Fencing_effects": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Fencing_effects_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Construction_effects": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Construction_effects_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Mammalian_herbivory": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Mammalian_herbivory_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Recreational_effects": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Recreational_effects_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Adjacent_lands_condition": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Adjacent_lands_condition_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Fire_influence": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Fire_influence_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Information_quality_quantity": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:InformationQualityQuantityRisk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Cultural_significance": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Cultural_significance_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Historical_significance": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Historical_significance_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Recreational_significance": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Recreational_significance_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Economic_value": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Economic_value_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Conformance_to_mgmt_plan": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Conformance_to_mgmt_plan_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Scientific_educational_value": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:ScientificEducationalValueRisk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Environmental_compliance": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Environmental_compliance_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Legal_status": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Legal_status_Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_SEAP_Scores:Trend_Assessment": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:AquiferEffects": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:WatershedEffects": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:WQEffects": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:LandStability": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:RunoutEffects": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:SoilIntegrity": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:VegComposition": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:VegCondition": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:FloraFocTES": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:FaunaSpecies": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:FaunaFocTES": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:InvasiveSpecies": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:FlowRegulation": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:ConstrRoadEffects": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:FenceEffects": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:HerbEffects": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:RecEffects": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:OthDistEffects": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:CulturalValues": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:LandOwnership": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:OtherOwnerActions": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:LandMgmtPlan": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:EnvCompliance": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:WaterUse": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:WaterRights": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:HydDivPerm": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:HydDivTemp": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:HydPreExtract": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:HydPostExtract": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:HydWetlndExtract": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:HydSrceExtract": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:HydRegulated": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:HydPollution": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:HydFlood": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:HydWells": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:HydOther": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:HydNone": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:SoilChErosion": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:SoilCompact": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:SoilDebrisFl": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:SoilDeposition": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:SoilDisplace": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:SoilErosion": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:SoilEvaporate": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:SoilExcavate": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:SoilGroundDist": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:SoilGullyEr": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:SoilMassWaste": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:SoilMining": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:SoilPedAnimal": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:SoilPedRain": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:SoilPipes": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:SoilRill": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:SoilRuts": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:SoilSheetEr": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:SoilSlump": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:SoilSplash": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:SoilWind": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:SoilMixing": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:SoilRemoval": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:SoilTrails": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:SoilOther": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:StrUtility": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:SoilNone": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:StrEnclosure": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:StrErosionCtrl": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:StrFence": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:StrOilorGasWell": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:StrPipeline": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:StrPollution": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:StrPowerLine": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:StrRoad": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:StrOther": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:StrNone": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:RecCampsite": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:RecVehicle": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:RecOther": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:RecNone": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:AnimalBeaver": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:AnimalFeral": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:AnimalGrazing": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:AnimalWild": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:AnimalLivestock": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:AnimalTrails": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:AnimalTrampling": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:AnimalOther": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:AnimalNone": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:MiscFire": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:MiscTreeCut": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:MiscRefuse": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:MiscOther": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:MiscNone": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:AFWQ0": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:AFWQ0Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:AFWQ1": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:AFWQ1Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:AFWQ2": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:AFWQ2Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:AFWQ3": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:AFWQ3Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:AFWQ4": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:AFWQ4Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:AFWQ5": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:AFWQ5Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:AFWQ6": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:AFWQ6Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:GEO0": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:GEO1": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:GEO1Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:GEO2": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:GEO2Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:GEO3": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:GEO3Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:GEO4": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:GEO4Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:GEO5": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:GEO5Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:HAB1": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:HAB1Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:HAB2": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:HAB2Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:HAB3": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:HAB3Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:HAB4": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:HAB4Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:HAB5": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:HAB5Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:BIO1a": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:BIO1aRisk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:BIO1b": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:BIO1bRisk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:BIO2a": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:BIO2aRisk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:BIO2b": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:BIO2bRisk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:BIO3a": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:BIO3aRisk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:BIO3b": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:BIO3bRisk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:BIO4a": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:BIO4aRisk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:BIO4b": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:BIO4bRisk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:FHI1": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:FHI1Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:FHI2": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:FHI2Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:FHI3": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:FHI3Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:FHI4": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:FHI4Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:FHI5": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:FHI5Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:FHI6": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:FHI6Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:FHI7": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:FHI7Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:FHI8": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:FHI8Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:FHI9": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:FHI9Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:AC1": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:AC1Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:AC2": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:AC2Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:AC3": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:AC3Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:AC4": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:AC4Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:AC5": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:AC5Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:AC6": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:AC6Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:AC7": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:AC7Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:AC8": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:AC8Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:AC9": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:AC9Risk": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "tbl_seapscore:TA": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_mgmtindicators:initialtimestamp": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:HydDivPerm": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:HydDivTemp": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:HydPreExtract": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:HydPostExtract": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:HydWetlndExtract": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:HydSrceExtract": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:HydRegulated": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:HydPollution": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:HydFlood": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:HydWells": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:HydOther": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:HydNone": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:SoilChErosion": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:SoilCompact": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:SoilDebrisFl": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:SoilDeposition": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:SoilDisplace": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:SoilErosion": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:SoilEvaporate": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:SoilExcavate": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:SoilGroundDist": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:SoilGullyEr": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:SoilMassWaste": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:SoilMining": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:SoilPedAnimal": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:SoilPedRain": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:SoilPipes": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:SoilRill": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:SoilRuts": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:SoilSheetEr": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:SoilSlump": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:SoilSplash": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:SoilWind": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:SoilMixing": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:SoilRemoval": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:SoilTrails": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:SoilOther": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:StrUtility": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:SoilNone": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:StrEnclosure": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:StrErosionCtrl": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:StrFence": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:StrOilorGasWell": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:StrPipeline": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:StrPollution": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:StrPowerLine": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:StrRoad": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:StrOther": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:StrNone": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:RecCampsite": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:RecVehicle": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:RecOther": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:RecNone": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:AnimalBeaver": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:AnimalFeral": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:AnimalGrazing": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:AnimalWild": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:AnimalLivestock": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:AnimalTrails": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:AnimalTrampling": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:AnimalOther": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:AnimalNone": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:MiscFire": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:MiscTreeCut": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:MiscRefuse": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:MiscOther": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:MiscNone": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "gde_disturbance:initialtimestamp": {
+    "lookupTable": "",
+    "codeField": "",
+    "descField": "",
+    "source": ""
+  },
+  "http://springstewardshipinstitute.org/:Points": {
+    "lookupTable": "tlu_proclaimednf",
+    "codeField": "ProclaimedNF",
+    "descField": "ProclaimedNF",
+    "source": "Springs Stewardship Institute:"
+  },
+  "http://springstewardshipinstitute.org/:tbl_surveys": {
+    "lookupTable": "view_tlu_surveyprotocol_for_arcgis",
+    "codeField": "SurveyProtocol",
+    "descField": "CastProtocolDescription",
+    "source": "Springs Stewardship Institute:"
+  },
+  "http://springstewardshipinstitute.org/:tbl_sitetreatment": {
+    "lookupTable": "tlu_treatmentareas",
+    "codeField": "TreatmentAreaID",
+    "descField": "TreatmentDescription",
+    "source": "Springs Stewardship Institute:"
+  },
+  "http://springstewardshipinstitute.org/:tbl_wqlocation": {
+    "lookupTable": "tlu_wqlocation",
+    "codeField": "Location",
+    "descField": "LocationText",
+    "source": "Springs Stewardship Institute:"
+  },
+  "http://springstewardshipinstitute.org/:gde_surveys": {
+    "lookupTable": "gdelu_flowpatternout",
+    "codeField": "FlowPatternOut",
+    "descField": "FlowPatternOut",
+    "source": "Springs Stewardship Institute:"
+  },
+  "tlu_taxavert:GlobalConservationStatus": {
+    "lookupTable": "view_tlu_globalconservationstatus_for_arcgis",
+    "codeField": "CastGlobalConservationStatus",
+    "descField": "NatureServeStatus",
+    "source": "NatureServeCode"
+  },
+  "tlu_taxaflora:GlobalConservationStatus": {
+    "lookupTable": "view_tlu_globalconservationstatus_for_arcgis",
+    "codeField": "CastGlobalConservationStatus",
+    "descField": "NatureServeStatus",
+    "source": "NatureServeCode"
+  },
+  "tlu_taxainvert:GlobalConservationStatus": {
+    "lookupTable": "view_tlu_globalconservationstatus_for_arcgis",
+    "codeField": "CastGlobalConservationStatus",
+    "descField": "NatureServeStatus",
+    "source": "NatureServeCode"
+  },
+  "tlu_taxaflora_gde:GlobalConservationStatus": {
+    "lookupTable": "view_tlu_globalconservationstatus_for_arcgis",
+    "codeField": "CastGlobalConservationStatus",
+    "descField": "NatureServeStatus",
+    "source": "NatureServeCode"
+  },
+  "tlu_taxaflora_gde:DefaultNativeStatus": {
+    "lookupTable": "tlu_nativestatuscodes",
+    "codeField": "NativeStatusCode",
+    "descField": "NativeStatusExplanation",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tlu_taxaflora_gde:DefaultProtectedArea": {
+    "lookupTable": "tlu_protectedarea",
+    "codeField": "ProtectedArea",
+    "descField": "ProtectedAreaText",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tlu_taxaflora_gde:DefaultWetlandStatus": {
+    "lookupTable": "tlu_wetlandstatus_les",
+    "codeField": "WetlandCode",
+    "descField": "Wetland_LES:WetlandDescription",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tlu_taxaflora_gde:EndemismLevel": {
+    "lookupTable": "view_tlu_endemism_for_arcgis",
+    "codeField": "EndemismLevel",
+    "descField": "EndemismDescr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tlu_taxaflora_gde:SpringHabitatUse": {
+    "lookupTable": "view_tlu_springmicrohabitatuse_for_arcgis",
+    "codeField": "SpringUse",
+    "descField": "SpringUseBrief:SpringUseDescr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tlu_taxaflora_gde:SpringLifeHistory": {
+    "lookupTable": "view_tlu_springlifehistory_for_arcgis",
+    "codeField": "CastSpringLifeHistory",
+    "descField": "SpringLifeHistoryDescr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tlu_taxaflora_gde:AquaticStatus": {
+    "lookupTable": "view_tlu_aquaticstatus_for_arcgis",
+    "codeField": "AquaticStatus",
+    "descField": "AquaticStatusDescr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tlu_taxaflora_gde:ESAstatus": {
+    "lookupTable": "view_tlu_esastatus_for_arcgis",
+    "codeField": "ESAStatus",
+    "descField": "ESAStatusDescr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tlu_taxaflora_gde:IUCNstatus": {
+    "lookupTable": "view_tlu_iucnstatus_for_arcgis",
+    "codeField": "IUCNstatus",
+    "descField": "IUCNtext:IUCNdescr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "tlu_taxavert:NtnlConservationStatus": {
+    "lookupTable": "view_tlu_ntnlconservationstatus_for_arcgis",
+    "codeField": "CastNtnlConservationStatus",
+    "descField": "NatureServeStatus",
+    "source": "NatureServeCode"
+  },
+  "tlu_taxaflora:NtnlConservationStatus": {
+    "lookupTable": "view_tlu_ntnlconservationstatus_for_arcgis",
+    "codeField": "CastNtnlConservationStatus",
+    "descField": "NatureServeStatus",
+    "source": "NatureServeCode"
+  },
+  "tlu_taxainvert:NtnlConservationStatus": {
+    "lookupTable": "view_tlu_ntnlconservationstatus_for_arcgis",
+    "codeField": "CastNtnlConservationStatus",
+    "descField": "NatureServeStatus",
+    "source": "NatureServeCode"
+  },
+  "tlu_taxaflora_gde:NtnlConservationStatus": {
+    "lookupTable": "view_tlu_ntnlconservationstatus_for_arcgis",
+    "codeField": "CastNtnlConservationStatus",
+    "descField": "NatureServeStatus",
+    "source": "NatureServeCode"
+  },
+  "tbl_WQData_location:CastWQParameter": {
+    "lookupTable": "view_tlu_wqparameters_for_arcgis",
+    "codeField": "CastWQParameter",
+    "descField": "WQParameterEPA",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "gde_domveglevel1:Veg_Surr": {
+    "lookupTable": "gdelu_veg_surr",
+    "codeField": "Veg_Surr",
+    "descField": "Veg_Surr",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "gde_domveglevel1:BryoAbundance": {
+    "lookupTable": "gdelu_bryoabundance",
+    "codeField": "BryoAbundance",
+    "descField": "BryoAbundance",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "gde_domveglevel1:CutLevelCode": {
+    "lookupTable": "gdelu_cutlevel",
+    "codeField": "CutLevelCode",
+    "descField": "CutLevelText",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "gde_domveglevel1:TreeRank": {
+    "lookupTable": "gdelu_lifeformrank",
+    "codeField": "Rank",
+    "descField": "RankDescription",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "gde_domveglevel1:ShrubRank": {
+    "lookupTable": "gdelu_lifeformrank",
+    "codeField": "Rank",
+    "descField": "RankDescription",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "gde_domveglevel1:GraminoidRank": {
+    "lookupTable": "gdelu_lifeformrank",
+    "codeField": "Rank",
+    "descField": "RankDescription",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "gde_domveglevel1:ForbRank": {
+    "lookupTable": "gdelu_lifeformrank",
+    "codeField": "Rank",
+    "descField": "RankDescription",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "gde_domveglevel1:AquaticRank": {
+    "lookupTable": "gdelu_lifeformrank",
+    "codeField": "Rank",
+    "descField": "RankDescription",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "gde_domveglevel1:UnknownRank": {
+    "lookupTable": "gdelu_lifeformrank",
+    "codeField": "Rank",
+    "descField": "RankDescription",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "gde_domveglevel1:BryophyteRank": {
+    "lookupTable": "gdelu_lifeformrank",
+    "codeField": "Rank",
+    "descField": "RankDescription",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "gde_watertable:Source": {
+    "lookupTable": "gdelu_wtsource",
+    "codeField": "WTSource",
+    "descField": "WTSource",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "gde_watertable:MsrmtLocation": {
+    "lookupTable": "gdelu_wtlocation",
+    "codeField": "WTLocation",
+    "descField": "WTLocation",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "gde_soil:SoilLocation": {
+    "lookupTable": "gdelu_soillocation",
+    "codeField": "SoilLocation",
+    "descField": "SoilLocation",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "gde_soil:Method": {
+    "lookupTable": "gdelu_soilmethod",
+    "codeField": "Method",
+    "descField": "Method",
+    "source": "Springs Stewardship Institute: http://springstewardshipinstitute.org/"
+  },
+  "/spring-fed-wetlands/spring-fed-wetlands-sada-pohlmann-protocol.pdf):tbl_sadaprotocols": {
+    "lookupTable": "tlu_sada_disturbance",
+    "codeField": "Description",
+    "descField": "DisturbanceDefinition",
+    "source": "Protocols developed by Don Sada and Karl Pohlmann (see https://www.dri.edu/images/stories/conferences_and_workshops "
+  }
+}

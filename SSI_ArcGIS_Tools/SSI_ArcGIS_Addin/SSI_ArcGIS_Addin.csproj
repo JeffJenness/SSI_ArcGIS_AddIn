@@ -25,6 +25,11 @@
       <Link>SSI_Defaults.gdb\%(RecursiveDir)%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <!-- Editable metadata templates, deployed next to SSI_Defaults.gdb. -->
+    <Content Include="..\Metadata\**\*.json">
+      <Link>Metadata\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\launchSettings.json" />

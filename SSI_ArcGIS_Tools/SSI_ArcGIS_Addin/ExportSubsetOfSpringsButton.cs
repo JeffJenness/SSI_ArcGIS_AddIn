@@ -53,7 +53,7 @@ namespace SSI_ArcGIS_Addin
                 var viewModel = new ExportSubsetParametersViewModel(
                     layers, defaultFolder,
                     Module1.LastSelectedFeaturesOnly, Module1.LastTrimStrings,
-                    Module1.LastCreateSummary, Module1.LastCreateGpx);
+                    Module1.LastCreateSummary, Module1.LastCreateGpx, Module1.LastWriteMetadata);
                 var window = new ExportSubsetParametersWindow(viewModel)
                 {
                     Owner = FrameworkApplication.Current.MainWindow,
@@ -69,6 +69,7 @@ namespace SSI_ArcGIS_Addin
                 Module1.LastTrimStrings = viewModel.TrimStrings;
                 Module1.LastCreateSummary = viewModel.CreateSummary;
                 Module1.LastCreateGpx = viewModel.CreateGpx;
+                Module1.LastWriteMetadata = viewModel.WriteMetadata;
 
                 // 3) Resolve the chosen layer to thread-agnostic parameters on the MCT.
                 ExportSubsetParameters parameters = await QueuedTask.Run(() =>
@@ -226,6 +227,7 @@ namespace SSI_ArcGIS_Addin
                 TrimStrings = vm.TrimStrings,
                 CreateSummary = vm.CreateSummary,
                 CreateGpx = vm.CreateGpx,
+                WriteMetadata = vm.WriteMetadata,
             };
         }
 

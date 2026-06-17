@@ -35,6 +35,7 @@ namespace SSI_ArcGIS_Addin
         private const string TrimStringsKey = "ExportSubset_TrimStrings";
         private const string CreateSummaryKey = "ExportSubset_CreateSummary";
         private const string CreateGpxKey = "ExportSubset_CreateGpx";
+        private const string WriteMetadataKey = "ExportSubset_WriteMetadata";
 
         /// <summary>
         /// Last-used Export Subset of Springs dialog choices. Held for the session
@@ -46,6 +47,7 @@ namespace SSI_ArcGIS_Addin
         public static bool LastTrimStrings { get; set; }
         public static bool LastCreateSummary { get; set; }
         public static bool LastCreateGpx { get; set; }
+        public static bool LastWriteMetadata { get; set; }
 
         #region Overrides
 
@@ -60,6 +62,7 @@ namespace SSI_ArcGIS_Addin
             LastTrimStrings = ReadBool(settings, TrimStringsKey, LastTrimStrings);
             LastCreateSummary = ReadBool(settings, CreateSummaryKey, LastCreateSummary);
             LastCreateGpx = ReadBool(settings, CreateGpxKey, LastCreateGpx);
+            LastWriteMetadata = ReadBool(settings, WriteMetadataKey, LastWriteMetadata);
             return Task.FromResult(0);
         }
 
@@ -74,6 +77,7 @@ namespace SSI_ArcGIS_Addin
             settings.Add(TrimStringsKey, LastTrimStrings.ToString());
             settings.Add(CreateSummaryKey, LastCreateSummary.ToString());
             settings.Add(CreateGpxKey, LastCreateGpx.ToString());
+            settings.Add(WriteMetadataKey, LastWriteMetadata.ToString());
             return Task.FromResult(0);
         }
 

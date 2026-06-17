@@ -49,5 +49,12 @@ namespace SSI_ArcGIS_Addin
         /// (<see cref="OutputName"/> + ".gpx") next to the output geodatabase.
         /// </summary>
         internal bool CreateGpx { get; init; }
+
+        /// <summary>
+        /// When true, write dataset metadata (abstract, purpose, keywords, field
+        /// descriptions, coded-value domains, contacts, lineage) onto each output
+        /// dataset from the editable JSON templates.
+        /// </summary>
+        internal bool WriteMetadata { get; init; }
     }
 }

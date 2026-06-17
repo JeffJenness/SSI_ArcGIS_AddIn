@@ -133,6 +133,15 @@ namespace SSI_ArcGIS_Addin
                 }
             }
 
+            // 7) Optional dataset metadata, from the editable JSON templates.
+            if (_p.WriteMetadata)
+            {
+                ThrowIfCancelled(progressor);
+                SetProgress(progressor, "Writing dataset metadata...");
+                report.AppendLine(
+                    SpringsMetadataWriter.Write(outputGdb, outputGdbPath, _p.OutputName, created, progressor));
+            }
+
             stopwatch.Stop();
             report.AppendLine();
             report.AppendLine($"Datasets created: {created.Count}");
