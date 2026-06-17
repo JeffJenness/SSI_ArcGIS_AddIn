@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Linq;
 using ArcGIS.Core.Data;
 using ArcGIS.Desktop.Core.Geoprocessing;
@@ -13,11 +14,11 @@ namespace SSI_ArcGIS_Addin
 {
     /// <summary>
     /// Exports the subset springs feature class to a GPX file. The native
-    /// FeaturesToGPX tool only writes name/elevation/time/description, so this
-    /// runs it with SiteID as the waypoint name (a unique key) and then
-    /// post-processes the GPX XML to rewrite the name into the legacy composite
-    /// ("ShortName [SiteID = N]") and inject the extra waypoint elements the old
-    /// WriteGPX produced: magvar, cmt, src, link, sym, type.
+    /// FeaturesToGPX tool is used only for the geometry (and a unique SiteID name
+    /// key); everything else is written by post-processing the GPX XML. This
+    /// avoids FeaturesToGPX's strict field-type requirements (its elevation field
+    /// must be Double and its date field must be Date) and reproduces the legacy
+    /// WriteGPX output: composite name plus magvar/cmt/desc/src/link/sym/type.
     /// </summary>
     internal static class GpxExporter
     {
@@ -34,21 +35,22 @@ namespace SSI_ArcGIS_Addin
                     Path.GetDirectoryName(outputGeodatabasePath) ?? string.Empty, springsName + ".gpx");
 
                 GpxData data = await QueuedTask.Run(() => ReadGpxData(outputGeodatabasePath, springsName));
-                if (data == null)
+                if (data == null || string.IsNullOrEmpty(data.NameKeyField))
                 {
-                    return "- GPX export skipped: springs feature class not found.";
+                    return "- GPX export skipped: springs feature class has no SiteID field.";
                 }
 
-                // Run FeaturesToGPX with SiteID as <name> so waypoints can be matched.
-                var values = Geoprocessing.MakeValueArray(
-                    inFeatures, gpxPath, data.NameKeyField, data.ElevationField, data.DateField, data.DescriptionField);
+                // FeaturesToGPX handles geometry + the SiteID name key only. The
+                // elevation/date/description fields are intentionally omitted (the
+                // tool is type-strict); they are written during post-processing.
+                var values = Geoprocessing.MakeValueArray(inFeatures, gpxPath, data.NameKeyField);
                 IGPResult result = await Geoprocessing.ExecuteToolAsync("conversion.FeaturesToGPX", values);
                 if (result.IsFailed)
                 {
                     return $"- GPX export failed: {string.Join("; ", result.Messages.Select(m => m.Text))}";
                 }
 
-                int enriched = await Task.Run(() => InjectExtraElements(gpxPath, data.Waypoints));
+                int enriched = await Task.Run(() => WriteWaypointElements(gpxPath, data.Waypoints));
                 return $"- GPX file: {gpxPath} ({enriched:N0} waypoint(s))";
             }
             catch (Exception ex)
@@ -58,8 +60,8 @@ namespace SSI_ArcGIS_Addin
         }
 
         /// <summary>
-        /// Reads the GPX field mappings and the per-spring extra-element values
-        /// (keyed by SiteID text) from the output springs feature class. MCT.
+        /// Reads, keyed by SiteID text, all values written to each GPX waypoint.
+        /// Runs on the MCT.
         /// </summary>
         private static GpxData ReadGpxData(string gdbPath, string springsName)
         {
@@ -77,29 +79,27 @@ namespace SSI_ArcGIS_Addin
             using (featureClass)
             {
                 FeatureClassDefinition def = featureClass.GetDefinition();
-                string Present(string field) => def.FindField(field) >= 0 ? field : string.Empty;
-
                 var data = new GpxData
                 {
-                    NameKeyField = Present("SiteID"),
-                    ElevationField = Present("ElevationM"),
-                    DateField = Present("LoginAddedDate"),
-                    DescriptionField = Present("CastSiteDescription"),
+                    NameKeyField = def.FindField("SiteID") >= 0 ? "SiteID" : string.Empty,
                     Waypoints = new Dictionary<string, Waypoint>(StringComparer.Ordinal),
                 };
 
                 int site = def.FindField("SiteID");
+                if (site < 0)
+                {
+                    return data;
+                }
+
                 int shortName = def.FindField("ShortName");
+                int elev = def.FindField("ElevationM");
+                int date = def.FindField("LoginAddedDate");
+                int desc = def.FindField("CastSiteDescription");
                 int magDev = def.FindField("MagDev");
                 int inventory = def.FindField("InventoryLevel");
                 int source = def.FindField("infoSourceDetail");
                 int url = def.FindField("CastImageHyperlink");
                 int type = def.FindField("SpringType1");
-
-                if (site < 0)
-                {
-                    return data;
-                }
 
                 using RowCursor cursor = featureClass.Search(null, false);
                 while (cursor.MoveNext())
@@ -111,14 +111,18 @@ namespace SSI_ArcGIS_Addin
                         continue;
                     }
 
+                    // GPX waypoint name = "<ShortName> #<SiteID>".
                     string name = shortName >= 0 ? Text(row[shortName]) : null;
                     string composite = string.IsNullOrEmpty(name)
-                        ? $"[SiteID = {siteId}]"
-                        : $"{name} [SiteID = {siteId}]";
+                        ? $"#{siteId}"
+                        : $"{name} #{siteId}";
 
                     data.Waypoints[siteId] = new Waypoint
                     {
                         Name = composite,
+                        Elevation = elev >= 0 ? Number(row[elev]) : null,
+                        Time = date >= 0 ? IsoTime(row[date]) : null,
+                        Description = desc >= 0 ? Text(row[desc]) : null,
                         MagVar = magDev >= 0 ? Number(row[magDev]) : null,
                         Comment = inventory >= 0 ? Text(row[inventory]) : null,
                         Source = source >= 0 ? Text(row[source]) : null,
@@ -132,12 +136,16 @@ namespace SSI_ArcGIS_Addin
         }
 
         /// <summary>
-        /// Rewrites each waypoint's name to the composite and inserts the extra
-        /// elements in GPX-schema order. Returns the number of waypoints updated.
+        /// Replaces each waypoint's children (FeaturesToGPX wrote only the SiteID
+        /// name) with the full ordered GPX element set. Returns the count updated.
         /// </summary>
-        private static int InjectExtraElements(string gpxPath, IReadOnlyDictionary<string, Waypoint> waypoints)
+        private static int WriteWaypointElements(string gpxPath, IReadOnlyDictionary<string, Waypoint> waypoints)
         {
             XDocument document = XDocument.Load(gpxPath);
+
+            // Replace the default "Esri" creator on the root <gpx> element.
+            document.Root?.SetAttributeValue("creator", "Springs Stewardship Institute");
+
             int updated = 0;
 
             foreach (XElement wpt in document.Descendants(Gpx + "wpt").ToList())
@@ -148,20 +156,20 @@ namespace SSI_ArcGIS_Addin
                     continue;
                 }
 
-                // Preserve what FeaturesToGPX wrote, then rebuild children in order:
-                // ele, time, magvar, name, cmt, desc, src, link, sym, type.
-                string ele = wpt.Element(Gpx + "ele")?.Value;
-                string time = wpt.Element(Gpx + "time")?.Value;
-                string desc = wpt.Element(Gpx + "desc")?.Value;
+                // Keep any elevation FeaturesToGPX derived from geometry Z if we
+                // don't have an explicit ElevationM value.
+                string toolEle = wpt.Element(Gpx + "ele")?.Value;
 
                 wpt.RemoveNodes(); // removes child elements; keeps lat/lon attributes
 
+                // GPX wptType element order: ele, time, magvar, name, cmt, desc, src, link, sym, type.
+                string ele = info.Elevation ?? toolEle;
                 if (ele != null) wpt.Add(new XElement(Gpx + "ele", ele));
-                if (time != null) wpt.Add(new XElement(Gpx + "time", time));
+                if (info.Time != null) wpt.Add(new XElement(Gpx + "time", info.Time));
                 if (info.MagVar != null) wpt.Add(new XElement(Gpx + "magvar", info.MagVar));
                 wpt.Add(new XElement(Gpx + "name", info.Name));
                 if (info.Comment != null) wpt.Add(new XElement(Gpx + "cmt", info.Comment));
-                if (desc != null) wpt.Add(new XElement(Gpx + "desc", desc));
+                if (info.Description != null) wpt.Add(new XElement(Gpx + "desc", info.Description));
                 if (info.Source != null) wpt.Add(new XElement(Gpx + "src", info.Source));
                 if (info.Url != null)
                 {
@@ -187,8 +195,24 @@ namespace SSI_ArcGIS_Addin
                 return null;
             }
 
-            string s = value.ToString().Trim();
+            string s = RemoveInvalidXmlChars(value.ToString().Trim());
             return s.Length == 0 ? null : s;
+        }
+
+        /// <summary>
+        /// Strips characters that are illegal in XML 1.0 (e.g. most control
+        /// characters). XML-reserved characters such as &amp;, &lt; and &gt; are
+        /// NOT touched here — System.Xml.Linq escapes those automatically when the
+        /// document is saved.
+        /// </summary>
+        private static string RemoveInvalidXmlChars(string value)
+        {
+            if (string.IsNullOrEmpty(value) || value.All(XmlConvert.IsXmlChar))
+            {
+                return value;
+            }
+
+            return new string(value.Where(XmlConvert.IsXmlChar).ToArray());
         }
 
         private static string Number(object value)
@@ -208,23 +232,46 @@ namespace SSI_ArcGIS_Addin
                     return i.ToString(CultureInfo.InvariantCulture);
                 case long l:
                     return l.ToString(CultureInfo.InvariantCulture);
+                case short s:
+                    return s.ToString(CultureInfo.InvariantCulture);
                 default:
                     return Text(value);
+            }
+        }
+
+        /// <summary>Formats a date value as GPX ISO-8601 UTC, or null if it isn't a usable date.</summary>
+        private static string IsoTime(object value)
+        {
+            const string format = "yyyy-MM-ddTHH:mm:ssZ";
+            switch (value)
+            {
+                case null:
+                case DBNull:
+                    return null;
+                case DateTime dt:
+                    return dt.ToUniversalTime().ToString(format, CultureInfo.InvariantCulture);
+                case DateTimeOffset dto:
+                    return dto.UtcDateTime.ToString(format, CultureInfo.InvariantCulture);
+                default:
+                    return DateTime.TryParse(value.ToString(), CultureInfo.InvariantCulture,
+                        DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal, out DateTime parsed)
+                        ? parsed.ToString(format, CultureInfo.InvariantCulture)
+                        : null;
             }
         }
 
         private sealed class GpxData
         {
             internal string NameKeyField { get; set; }
-            internal string ElevationField { get; set; }
-            internal string DateField { get; set; }
-            internal string DescriptionField { get; set; }
             internal Dictionary<string, Waypoint> Waypoints { get; set; }
         }
 
         private sealed class Waypoint
         {
             internal string Name { get; set; }
+            internal string Elevation { get; set; }
+            internal string Time { get; set; }
+            internal string Description { get; set; }
             internal string MagVar { get; set; }
             internal string Comment { get; set; }
             internal string Source { get; set; }
