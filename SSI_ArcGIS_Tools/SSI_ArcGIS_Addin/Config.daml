@@ -5,7 +5,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://schemas.esri.com/DADF/Registry file:///C:/Program%20Files/ArcGIS/Pro/bin/ArcGIS.Desktop.Framework.xsd">
 
-  <AddInInfo id="{738e31ff-cf24-451e-88f9-2e82c4fc833f}" version="1.4.0" desktopVersion="3.7.1901" product="ArcGISPro">
+  <AddInInfo id="{738e31ff-cf24-451e-88f9-2e82c4fc833f}" version="1.4.1" desktopVersion="3.7.1901" product="ArcGISPro">
     <Name>SSI_ArcGIS_Addin</Name>   
     <Description>Tools to aid in Springs Stewardship GIS projects.</Description>
     <Image>Images\AddInIcon_32.png</Image>
@@ -66,8 +66,8 @@
                 caption="Export GPX"
                 className="ExportGpxButton"
                 loadOnClick="true"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonGreen16.png"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonGreen32.png"
+                smallImage="Images\Spring_GPX_16.png"
+                largeImage="Images\raised_Spring_GPX_for_VB.png"
                 keytip="EG">
           <tooltip heading="Export GPX">
             Exports the selected springs of a springs layer to a GPX file, formatted the same way as the Export Geodatabase tool's GPX output. Enabled only when a map view is active.<disabledText />
