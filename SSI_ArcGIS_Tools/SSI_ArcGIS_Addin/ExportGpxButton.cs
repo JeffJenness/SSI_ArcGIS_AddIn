@@ -33,7 +33,7 @@ namespace SSI_ArcGIS_Addin
                 {
                     MessageBox.Show(
                         "The active map has no springs point layers to export." + Environment.NewLine +
-                        "A layer must be a point feature class with both a 'SiteID' and a 'SiteName' field.",
+                        "A layer must be a point feature class with a 'SiteID', 'SiteName' and 'InventoryLevel' field.",
                         "Export GPX");
                     return;
                 }

@@ -1,0 +1,139 @@
+<controls:ProWindow x:Class="SSI_ArcGIS_Addin.NearestSpringDistancesWindow"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:ArcGIS.Desktop.Framework.Controls;assembly=ArcGIS.Desktop.Framework"
+                    xmlns:local="clr-namespace:SSI_ArcGIS_Addin"
+                    Title="Calculate Distance to Nearest Known Spring"
+                    Width="660" Height="640" MinWidth="560" MinHeight="560"
+                    WindowStartupLocation="CenterOwner"
+                    ResizeMode="CanResize" ShowInTaskbar="False">
+  <Grid>
+    <Grid Margin="14">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />   <!-- 0 info message -->
+        <RowDefinition Height="Auto" />   <!-- 1 list labels -->
+        <RowDefinition Height="*" />      <!-- 2 list boxes (resize vertically) -->
+        <RowDefinition Height="Auto" />   <!-- 3 additional-data group -->
+        <RowDefinition Height="Auto" />   <!-- 4 user name -->
+        <RowDefinition Height="Auto" />   <!-- 5 all / selected options -->
+        <RowDefinition Height="Auto" />   <!-- 6 output csv -->
+        <RowDefinition Height="Auto" />   <!-- 7 buttons -->
+      </Grid.RowDefinitions>
+
+      <!-- Informational message (resizes horizontally) -->
+      <Border Grid.Row="0" BorderBrush="#C0C0C0" BorderThickness="1" Padding="8" Margin="0,0,0,10">
+        <TextBlock TextWrapping="Wrap"
+                   Text="Select the springs point feature class from the list below, choose the SiteID and Inventory Level fields, and specify the output CSV file. Inventory Level values of &quot;No Spring&quot; are ignored as targets in the analysis." />
+      </Border>
+
+      <!-- List labels -->
+      <Grid Grid.Row="1" Margin="0,0,0,2">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="8" />
+          <ColumnDefinition Width="180" />
+          <ColumnDefinition Width="8" />
+          <ColumnDefinition Width="180" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Column="0" Text="-- Select Layer --" HorizontalAlignment="Center" FontWeight="SemiBold" />
+        <TextBlock Grid.Column="2" Text="-- Select SiteID Field --" HorizontalAlignment="Center" FontWeight="SemiBold" />
+        <TextBlock Grid.Column="4" Text="-- Inventory Level Field --" HorizontalAlignment="Center" FontWeight="SemiBold" />
+      </Grid>
+
+      <!-- List boxes (resize vertically; only the layer list resizes horizontally) -->
+      <Grid Grid.Row="2" Margin="0,0,0,10">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="8" />
+          <ColumnDefinition Width="180" />
+          <ColumnDefinition Width="8" />
+          <ColumnDefinition Width="180" />
+        </Grid.ColumnDefinitions>
+        <ListBox x:Name="lbxLayers" Grid.Column="0"
+                 ItemsSource="{Binding Layers}" SelectedItem="{Binding SelectedLayer}"
+                 DisplayMemberPath="DisplayName" />
+        <ListBox x:Name="lbxFields" Grid.Column="2"
+                 ItemsSource="{Binding SiteIdFields}" SelectedItem="{Binding SelectedSiteIdField}" />
+        <ListBox x:Name="lbxInvLevField" Grid.Column="4"
+                 ItemsSource="{Binding InvLevelFields}" SelectedItem="{Binding SelectedInvLevelField}" />
+      </Grid>
+
+      <!-- Additional data to calculate -->
+      <GroupBox Grid.Row="3" Header="Additional Data to Calculate" Padding="8" Margin="0,0,0,10">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+          </Grid.ColumnDefinitions>
+          <!-- Left column: stays anchored to the left on horizontal resize -->
+          <StackPanel Grid.Column="0" HorizontalAlignment="Left">
+            <CheckBox Content="Include Spring Names" Margin="0,2" IsChecked="{Binding IncludeNames}" />
+            <CheckBox Content="Include Spring Elevations" Margin="0,2" IsChecked="{Binding IncludeElevations}" />
+            <CheckBox Content="Include Info Source data" Margin="0,2" IsChecked="{Binding IncludeInfoSource}" />
+          </StackPanel>
+          <!-- Right column: stays anchored to the right on horizontal resize -->
+          <StackPanel Grid.Column="2" HorizontalAlignment="Right">
+            <CheckBox Content="Include Login Data" Margin="0,2" IsEnabled="False" IsChecked="False" />
+            <CheckBox Content="Include Date Entered" Margin="0,2" IsChecked="{Binding IncludeDate}" />
+            <CheckBox Content="Include Inventory Level" Margin="0,2" IsChecked="{Binding IncludeInvLevel}" />
+          </StackPanel>
+        </Grid>
+      </GroupBox>
+
+      <!-- User name (disabled for now; cbxUserName resizes horizontally) -->
+      <Grid Grid.Row="4" Margin="0,0,0,10">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Column="0" VerticalAlignment="Center" Margin="0,0,8,0" IsEnabled="False"
+                   Text="User Name (only necessary if including Login data):" />
+        <ComboBox Grid.Column="1" IsEnabled="False"
+                  ItemsSource="{Binding UserNames}" SelectedItem="{Binding SelectedUserName}" />
+      </Grid>
+
+      <!-- Analyze all / selected (anchored to the right) -->
+      <StackPanel Grid.Row="5" HorizontalAlignment="Right" Margin="0,0,0,10">
+        <RadioButton GroupName="AnalyzeScope" Margin="0,2" HorizontalAlignment="Right"
+                     Content="{Binding AllOptionLabel}" IsChecked="{Binding AnalyzeAll}" />
+        <RadioButton GroupName="AnalyzeScope" Margin="0,2" HorizontalAlignment="Right"
+                     Content="{Binding SelOptionLabel}" IsChecked="{Binding AnalyzeSelected}"
+                     IsEnabled="{Binding IsSelectionEnabled}" />
+      </StackPanel>
+
+      <!-- Output CSV (txtOutput resizes horizontally; browse button anchored right) -->
+      <Grid Grid.Row="6" Margin="0,0,0,10">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Column="0" Text="Output CSV File:" VerticalAlignment="Center" Margin="0,0,8,0" />
+        <TextBox Grid.Column="1" VerticalAlignment="Center" Margin="0,0,8,0"
+                 Text="{Binding OutputPath, UpdateSourceTrigger=PropertyChanged}" />
+        <Button Grid.Column="2" Content="Browse..." MinWidth="80" Padding="10,3"
+                Command="{Binding BrowseCommand}" />
+      </Grid>
+
+      <!-- Buttons + validation (all anchored to the right) -->
+      <DockPanel Grid.Row="7" LastChildFill="False">
+        <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" Foreground="#B00020"
+                   TextWrapping="Wrap" MaxWidth="300" Text="{Binding ValidationMessage}" />
+        <Button DockPanel.Dock="Right" Content="OK" MinWidth="80" Padding="10,3" Margin="8,0,0,0"
+                IsDefault="True" IsEnabled="{Binding CanAccept}" Click="OnOkClick" />
+        <Button DockPanel.Dock="Right" Content="Cancel" MinWidth="80" Padding="10,3" Margin="8,0,0,0"
+                IsCancel="True" Click="OnCancelClick" />
+        <Button DockPanel.Dock="Right" Content="Manual" MinWidth="80" Padding="10,3"
+                Click="OnManualClick" />
+      </DockPanel>
+    </Grid>
+
+    <!-- Resize grip, always anchored to the window's bottom-right corner. -->
+    <Image x:Name="ResizeGrip" Stretch="None" Width="15" Height="15"
+           Source="pack://application:,,,/SSI_ArcGIS_Addin;component/Images/resize_grip.png"
+           HorizontalAlignment="Right" VerticalAlignment="Bottom"
+           Margin="0,0,3,3" IsHitTestVisible="False"
+           ToolTip="Drag an edge or corner to resize this window." />
+  </Grid>
+</controls:ProWindow>

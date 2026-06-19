@@ -37,6 +37,14 @@ namespace SSI_ArcGIS_Addin
         private const string CreateGpxKey = "ExportSubset_CreateGpx";
         private const string WriteMetadataKey = "ExportSubset_WriteMetadata";
 
+        // Nearest Spring Distances dialog choices.
+        private const string DistFolderKey = "SpringDistance_LastFolder";
+        private const string DistNamesKey = "SpringDistance_IncludeNames";
+        private const string DistElevationsKey = "SpringDistance_IncludeElevations";
+        private const string DistInfoSourceKey = "SpringDistance_IncludeInfoSource";
+        private const string DistDateKey = "SpringDistance_IncludeDate";
+        private const string DistInvLevelKey = "SpringDistance_IncludeInvLevel";
+
         /// <summary>
         /// Last-used Export Subset of Springs dialog choices. Held for the session
         /// and persisted with the project so the dialog can default to them.
@@ -48,6 +56,20 @@ namespace SSI_ArcGIS_Addin
         public static bool LastCreateSummary { get; set; }
         public static bool LastCreateGpx { get; set; }
         public static bool LastWriteMetadata { get; set; }
+
+        /// <summary>
+        /// Last-used Nearest Spring Distances dialog choices, persisted with the
+        /// project. The five "include" options default to true (the first time the
+        /// dialog is opened in a project all are checked); the login option is not
+        /// persisted because it is disabled for now.
+        /// </summary>
+        public static string LastDistanceFolder { get; set; }
+
+        public static bool LastDistIncludeNames { get; set; } = true;
+        public static bool LastDistIncludeElevations { get; set; } = true;
+        public static bool LastDistIncludeInfoSource { get; set; } = true;
+        public static bool LastDistIncludeDate { get; set; } = true;
+        public static bool LastDistIncludeInvLevel { get; set; } = true;
 
         #region Overrides
 
@@ -63,6 +85,17 @@ namespace SSI_ArcGIS_Addin
             LastCreateSummary = ReadBool(settings, CreateSummaryKey, LastCreateSummary);
             LastCreateGpx = ReadBool(settings, CreateGpxKey, LastCreateGpx);
             LastWriteMetadata = ReadBool(settings, WriteMetadataKey, LastWriteMetadata);
+
+            if (settings?.Get(DistFolderKey) is string distFolder && !string.IsNullOrWhiteSpace(distFolder))
+            {
+                LastDistanceFolder = distFolder;
+            }
+
+            LastDistIncludeNames = ReadBool(settings, DistNamesKey, LastDistIncludeNames);
+            LastDistIncludeElevations = ReadBool(settings, DistElevationsKey, LastDistIncludeElevations);
+            LastDistIncludeInfoSource = ReadBool(settings, DistInfoSourceKey, LastDistIncludeInfoSource);
+            LastDistIncludeDate = ReadBool(settings, DistDateKey, LastDistIncludeDate);
+            LastDistIncludeInvLevel = ReadBool(settings, DistInvLevelKey, LastDistIncludeInvLevel);
             return Task.FromResult(0);
         }
 
@@ -78,6 +111,17 @@ namespace SSI_ArcGIS_Addin
             settings.Add(CreateSummaryKey, LastCreateSummary.ToString());
             settings.Add(CreateGpxKey, LastCreateGpx.ToString());
             settings.Add(WriteMetadataKey, LastWriteMetadata.ToString());
+
+            if (!string.IsNullOrWhiteSpace(LastDistanceFolder))
+            {
+                settings.Add(DistFolderKey, LastDistanceFolder);
+            }
+
+            settings.Add(DistNamesKey, LastDistIncludeNames.ToString());
+            settings.Add(DistElevationsKey, LastDistIncludeElevations.ToString());
+            settings.Add(DistInfoSourceKey, LastDistIncludeInfoSource.ToString());
+            settings.Add(DistDateKey, LastDistIncludeDate.ToString());
+            settings.Add(DistInvLevelKey, LastDistIncludeInvLevel.ToString());
             return Task.FromResult(0);
         }
 
