@@ -6,7 +6,8 @@
                     Title="Calculate Distance to Nearest Known Spring"
                     Width="660" Height="640" MinWidth="560" MinHeight="560"
                     WindowStartupLocation="CenterOwner"
-                    ResizeMode="CanResize" ShowInTaskbar="False">
+                    ResizeMode="CanResize" ShowInTaskbar="False"
+                    Loaded="OnWindowLoaded">
   <Grid>
     <Grid Margin="14">
       <Grid.RowDefinitions>
@@ -51,7 +52,8 @@
         </Grid.ColumnDefinitions>
         <ListBox x:Name="lbxLayers" Grid.Column="0"
                  ItemsSource="{Binding Layers}" SelectedItem="{Binding SelectedLayer}"
-                 DisplayMemberPath="DisplayName" />
+                 DisplayMemberPath="DisplayName"
+                 SelectionChanged="OnLayerSelectionChanged" />
         <ListBox x:Name="lbxFields" Grid.Column="2"
                  ItemsSource="{Binding SiteIdFields}" SelectedItem="{Binding SelectedSiteIdField}" />
         <ListBox x:Name="lbxInvLevField" Grid.Column="4"
@@ -93,11 +95,11 @@
                   ItemsSource="{Binding UserNames}" SelectedItem="{Binding SelectedUserName}" />
       </Grid>
 
-      <!-- Analyze all / selected (anchored to the right) -->
-      <StackPanel Grid.Row="5" HorizontalAlignment="Right" Margin="0,0,0,10">
-        <RadioButton GroupName="AnalyzeScope" Margin="0,2" HorizontalAlignment="Right"
+      <!-- Analyze all / selected (centered horizontally) -->
+      <StackPanel Grid.Row="5" HorizontalAlignment="Center" Margin="0,0,0,10">
+        <RadioButton GroupName="AnalyzeScope" Margin="0,2" HorizontalAlignment="Center"
                      Content="{Binding AllOptionLabel}" IsChecked="{Binding AnalyzeAll}" />
-        <RadioButton GroupName="AnalyzeScope" Margin="0,2" HorizontalAlignment="Right"
+        <RadioButton GroupName="AnalyzeScope" Margin="0,2" HorizontalAlignment="Center"
                      Content="{Binding SelOptionLabel}" IsChecked="{Binding AnalyzeSelected}"
                      IsEnabled="{Binding IsSelectionEnabled}" />
       </StackPanel>
@@ -116,17 +118,19 @@
                 Command="{Binding BrowseCommand}" />
       </Grid>
 
-      <!-- Buttons + validation (all anchored to the right) -->
-      <DockPanel Grid.Row="7" LastChildFill="False">
-        <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" Foreground="#B00020"
-                   TextWrapping="Wrap" MaxWidth="300" Text="{Binding ValidationMessage}" />
-        <Button DockPanel.Dock="Right" Content="OK" MinWidth="80" Padding="10,3" Margin="8,0,0,0"
-                IsDefault="True" IsEnabled="{Binding CanAccept}" Click="OnOkClick" />
-        <Button DockPanel.Dock="Right" Content="Cancel" MinWidth="80" Padding="10,3" Margin="8,0,0,0"
-                IsCancel="True" Click="OnCancelClick" />
-        <Button DockPanel.Dock="Right" Content="Manual" MinWidth="80" Padding="10,3"
-                Click="OnManualClick" />
-      </DockPanel>
+      <!-- Validation message + buttons (buttons centered horizontally) -->
+      <StackPanel Grid.Row="7">
+        <TextBlock HorizontalAlignment="Center" Foreground="#B00020" Margin="0,0,0,6"
+                   TextWrapping="Wrap" TextAlignment="Center" Text="{Binding ValidationMessage}" />
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+          <Button Content="Cancel" MinWidth="80" Padding="10,3" Margin="0,0,8,0"
+                  IsCancel="True" Click="OnCancelClick" />
+          <Button Content="Manual" MinWidth="80" Padding="10,3" Margin="0,0,8,0"
+                  Click="OnManualClick" />
+          <Button Content="OK" MinWidth="80" Padding="10,3"
+                  IsDefault="True" IsEnabled="{Binding CanAccept}" Click="OnOkClick" />
+        </StackPanel>
+      </StackPanel>
     </Grid>
 
     <!-- Resize grip, always anchored to the window's bottom-right corner. -->

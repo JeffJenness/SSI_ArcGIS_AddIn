@@ -24,6 +24,9 @@ namespace SSI_ArcGIS_Addin
         private const string UsersTableName = "SSI_Users";
         private const string DefaultsGeodatabaseName = "SSI_Defaults.gdb";
 
+        // Preferred default output folder when it exists on this computer.
+        private const string PreferredOutputFolder = @"U:\GIS\Database\UpdatesFromGDB\";
+
         protected override void OnUpdate()
         {
             Enabled = MapView.Active != null;
@@ -52,12 +55,22 @@ namespace SSI_ArcGIS_Addin
                     return;
                 }
 
-                // 2) Compute the default output path: last-used folder (else project
-                //    folder) + a dated, uniquified CSV name.
-                string defaultFolder = Module1.LastDistanceFolder;
-                if (string.IsNullOrWhiteSpace(defaultFolder) || !Directory.Exists(defaultFolder))
+                // 2) Compute the default output path. Prefer the standard updates
+                //    folder when it exists on this computer; otherwise fall back to
+                //    the last-used folder, then the project folder. Append a dated,
+                //    uniquified CSV name.
+                string defaultFolder;
+                if (Directory.Exists(PreferredOutputFolder))
                 {
-                    defaultFolder = Project.Current?.HomeFolderPath;
+                    defaultFolder = PreferredOutputFolder;
+                }
+                else
+                {
+                    defaultFolder = Module1.LastDistanceFolder;
+                    if (string.IsNullOrWhiteSpace(defaultFolder) || !Directory.Exists(defaultFolder))
+                    {
+                        defaultFolder = Project.Current?.HomeFolderPath;
+                    }
                 }
                 string defaultPath = ComputeDefaultCsvPath(defaultFolder);
 
