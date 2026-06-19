@@ -5,7 +5,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://schemas.esri.com/DADF/Registry file:///C:/Program%20Files/ArcGIS/Pro/bin/ArcGIS.Desktop.Framework.xsd">
 
-  <AddInInfo id="{738e31ff-cf24-451e-88f9-2e82c4fc833f}" version="1.5.1" desktopVersion="3.7.1901" product="ArcGISPro">
+  <AddInInfo id="{738e31ff-cf24-451e-88f9-2e82c4fc833f}" version="1.6.0" desktopVersion="3.7.1901" product="ArcGISPro">
     <Name>SSI_ArcGIS_Addin</Name>   
     <Description>Tools to aid in Springs Stewardship GIS projects.</Description>
     <Image>Images\AddInIcon_32.png</Image>
@@ -23,6 +23,7 @@
         <tab id="SSI_ArcGIS_Addin_Tab1" caption="SSI">
           <group refID="SSI_ArcGIS_Addin_Group1"/>
           <group refID="SSI_ArcGIS_Addin_Group2"/>
+          <group refID="SSI_ArcGIS_Addin_GroupToys"/>
         </tab>
       </tabs>
 
@@ -36,6 +37,9 @@
           <button refID="SSI_ArcGIS_Addin_ExportGpx" size="large" />
           <button refID="SSI_ArcGIS_Addin_ExportSubsetOfSprings" size="large" />
           <button refID="SSI_ArcGIS_Addin_NearestSpringDistances" size="large" />
+        </group>
+        <group id="SSI_ArcGIS_Addin_GroupToys" caption="Toys">
+          <button refID="SSI_ArcGIS_Addin_ThoughtForTheDay" size="large" />
         </group>
       </groups>
       
@@ -94,6 +98,17 @@
                 keytip="ND">
           <tooltip heading="Nearest Spring Distances">
             Calculates the distance from each spring to the nearest known spring (one whose Inventory Level is not "No Spring") and writes the results to a CSV file. Enabled only when a map view is active.<disabledText />
+          </tooltip>
+        </button>
+        <button id="SSI_ArcGIS_Addin_ThoughtForTheDay"
+                caption="Thought for the Day"
+                className="ThoughtForTheDayButton"
+                loadOnClick="true"
+                smallImage="Images\Heart_16.png"
+                largeImage="Images\Heart_32.png"
+                keytip="TD">
+          <tooltip heading="Thought for the Day">
+            Shows a random inspirational quote in a little pop-up card.<disabledText />
           </tooltip>
         </button>
       </controls>

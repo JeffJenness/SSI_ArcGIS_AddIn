@@ -12,6 +12,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config.daml" />
+    <!-- Includes quote_bg.png, the "Thought for the Day" card background, deployed
+         next to the assembly and loaded from disk at run time. -->
     <Content Include="Images\*.png" Exclude="Images\resize_grip.png" />
     <Content Include="DarkImages\*.png" />
     <!-- The resize grip is loaded by WPF as an embedded resource (pack URI),
