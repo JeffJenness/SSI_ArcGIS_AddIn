@@ -12,9 +12,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config.daml" />
-    <!-- Includes quote_bg.png, the "Thought for the Day" card background, deployed
-         next to the assembly and loaded from disk at run time. -->
-    <Content Include="Images\*.png" Exclude="Images\resize_grip.png" />
+    <Content Include="Images\*.png" Exclude="Images\resize_grip.png;Images\quote_bg.png" />
+    <!-- The "Thought for the Day" card background is loaded from disk by path at
+         run time, so it must sit next to the assembly (the Install folder). Plain
+         add-in content lands at the package root instead, so copy it to the output
+         directory like the other assembly-relative content (Metadata, gdb). -->
+    <Content Include="Images\quote_bg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="DarkImages\*.png" />
     <!-- The resize grip is loaded by WPF as an embedded resource (pack URI),
          not as add-in content, so it must use the Resource build action. -->

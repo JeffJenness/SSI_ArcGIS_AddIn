@@ -4,8 +4,8 @@
         Title="A Little Inspiration"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent"
         ShowInTaskbar="False" WindowStartupLocation="CenterOwner"
-        ResizeMode="NoResize" SizeToContent="Manual"
-        Width="520" Height="360" Opacity="0"
+        ResizeMode="NoResize" SizeToContent="Height"
+        Width="520" MaxHeight="760" Opacity="0"
         Loaded="OnLoaded">
 
   <!-- Outer margin leaves room for the drop shadow so it isn't clipped by the
@@ -45,23 +45,27 @@
                 Foreground="White" Background="Transparent" BorderThickness="0"
                 ToolTip="Close" />
 
-        <!-- Quote + author -->
-        <StackPanel VerticalAlignment="Center" Margin="38,30">
-          <TextBlock x:Name="QuoteTextBlock" Foreground="White" FontSize="21"
-                     FontStyle="Italic" TextWrapping="Wrap" LineHeight="30"
-                     TextAlignment="Left">
-            <TextBlock.Effect>
-              <DropShadowEffect BlurRadius="6" ShadowDepth="1.5" Opacity="0.8" Color="Black" />
-            </TextBlock.Effect>
-          </TextBlock>
-          <TextBlock x:Name="AuthorTextBlock" Foreground="#CFE3FF" FontSize="14.5"
-                     HorizontalAlignment="Right" Margin="0,18,0,0" TextWrapping="Wrap"
-                     TextAlignment="Right">
-            <TextBlock.Effect>
-              <DropShadowEffect BlurRadius="5" ShadowDepth="1.5" Opacity="0.8" Color="Black" />
-            </TextBlock.Effect>
-          </TextBlock>
-        </StackPanel>
+        <!-- Quote + author. A ScrollViewer lets a very long quote scroll once the
+             window reaches its MaxHeight instead of being clipped. -->
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                      Margin="0,34,0,8">
+          <StackPanel Margin="38,0">
+            <TextBlock x:Name="QuoteTextBlock" Foreground="White" FontSize="21"
+                       FontStyle="Italic" TextWrapping="Wrap" LineHeight="30"
+                       TextAlignment="Left">
+              <TextBlock.Effect>
+                <DropShadowEffect BlurRadius="6" ShadowDepth="1.5" Opacity="0.8" Color="Black" />
+              </TextBlock.Effect>
+            </TextBlock>
+            <TextBlock x:Name="AuthorTextBlock" Foreground="#CFE3FF" FontSize="14.5"
+                       HorizontalAlignment="Right" Margin="0,18,0,0" TextWrapping="Wrap"
+                       TextAlignment="Right">
+              <TextBlock.Effect>
+                <DropShadowEffect BlurRadius="5" ShadowDepth="1.5" Opacity="0.8" Color="Black" />
+              </TextBlock.Effect>
+            </TextBlock>
+          </StackPanel>
+        </ScrollViewer>
       </Grid>
     </Border>
   </Border>
