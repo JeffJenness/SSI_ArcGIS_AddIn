@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
@@ -40,9 +41,36 @@ namespace SSI_ArcGIS_Addin
             _instance.Activate();
         }
 
+        // Within-paragraph line spacing; the inter-paragraph gap adds 40% on top
+        // of it (two successive +20% bumps).
+        private const double ParagraphLineHeight = 30;
+        private const double InterParagraphGap = ParagraphLineHeight * 0.4;
+
         private void SetQuote(string quote, string author)
         {
-            QuoteTextBlock.Text = quote ?? string.Empty;
+            // Render each paragraph as its own TextBlock so the gap between
+            // paragraphs can be larger than the line spacing within a paragraph.
+            QuoteParagraphs.Children.Clear();
+            string[] paragraphs = (quote ?? string.Empty).Split('\n');
+            for (int i = 0; i < paragraphs.Length; i++)
+            {
+                var block = new TextBlock
+                {
+                    Text = paragraphs[i],
+                    Foreground = Brushes.White,
+                    FontSize = 21,
+                    FontStyle = FontStyles.Italic,
+                    TextWrapping = TextWrapping.Wrap,
+                    LineHeight = ParagraphLineHeight,
+                    TextAlignment = TextAlignment.Left,
+                };
+                if (i > 0)
+                {
+                    block.Margin = new Thickness(0, InterParagraphGap, 0, 0);
+                }
+                QuoteParagraphs.Children.Add(block);
+            }
+
             AuthorTextBlock.Text = string.IsNullOrWhiteSpace(author) ? string.Empty : "— " + author;
         }
 

@@ -36,7 +36,7 @@
       <Grid>
         <!-- Readability scrim over the background image (own radius so its
              corners match the rounded card). -->
-        <Rectangle Fill="#99101826" RadiusX="13" RadiusY="13" />
+        <Rectangle Fill="#B3101826" RadiusX="13" RadiusY="13" />
 
         <!-- Close button -->
         <Button Content="&#x2715;" Click="OnClose" Cursor="Hand"
@@ -50,13 +50,14 @@
         <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
                       Margin="0,34,0,8">
           <StackPanel Margin="38,0">
-            <TextBlock x:Name="QuoteTextBlock" Foreground="White" FontSize="21"
-                       FontStyle="Italic" TextWrapping="Wrap" LineHeight="30"
-                       TextAlignment="Left">
-              <TextBlock.Effect>
+            <!-- One TextBlock per paragraph is created in code (SetQuote) so the
+                 gap *between* paragraphs can exceed the within-paragraph line
+                 spacing. -->
+            <StackPanel x:Name="QuoteParagraphs">
+              <StackPanel.Effect>
                 <DropShadowEffect BlurRadius="6" ShadowDepth="1.5" Opacity="0.8" Color="Black" />
-              </TextBlock.Effect>
-            </TextBlock>
+              </StackPanel.Effect>
+            </StackPanel>
             <TextBlock x:Name="AuthorTextBlock" Foreground="#CFE3FF" FontSize="14.5"
                        HorizontalAlignment="Right" Margin="0,18,0,0" TextWrapping="Wrap"
                        TextAlignment="Right">
