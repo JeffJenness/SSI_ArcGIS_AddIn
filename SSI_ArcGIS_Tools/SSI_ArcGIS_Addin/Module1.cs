@@ -45,6 +45,11 @@ namespace SSI_ArcGIS_Addin
         private const string DistDateKey = "SpringDistance_IncludeDate";
         private const string DistInvLevelKey = "SpringDistance_IncludeInvLevel";
 
+        // Thought for the Day: keys of recently shown quotes, so they are not
+        // repeated until 50 others have been shown.
+        private const string RecentQuoteKeysKey = "ThoughtForTheDay_RecentQuoteKeys";
+        public const int MaxRecentQuotes = 50;
+
         /// <summary>
         /// Last-used Export Subset of Springs dialog choices. Held for the session
         /// and persisted with the project so the dialog can default to them.
@@ -71,6 +76,30 @@ namespace SSI_ArcGIS_Addin
         public static bool LastDistIncludeDate { get; set; } = true;
         public static bool LastDistIncludeInvLevel { get; set; } = true;
 
+        /// <summary>
+        /// Keys of the most recently shown "Thought for the Day" quotes (oldest
+        /// first), persisted with the project. Capped at <see cref="MaxRecentQuotes"/>
+        /// so a quote is not repeated until that many others have been shown.
+        /// </summary>
+        public static List<string> RecentQuoteKeys { get; } = new List<string>();
+
+        /// <summary>Records a shown quote's key, moving it to the most-recent end and
+        /// dropping the oldest beyond the cap.</summary>
+        public static void RecordRecentQuote(string key)
+        {
+            if (string.IsNullOrEmpty(key))
+            {
+                return;
+            }
+
+            RecentQuoteKeys.Remove(key);
+            RecentQuoteKeys.Add(key);
+            while (RecentQuoteKeys.Count > MaxRecentQuotes)
+            {
+                RecentQuoteKeys.RemoveAt(0);
+            }
+        }
+
         #region Overrides
 
         protected override Task OnReadSettingsAsync(ModuleSettingsReader settings)
@@ -96,6 +125,12 @@ namespace SSI_ArcGIS_Addin
             LastDistIncludeInfoSource = ReadBool(settings, DistInfoSourceKey, LastDistIncludeInfoSource);
             LastDistIncludeDate = ReadBool(settings, DistDateKey, LastDistIncludeDate);
             LastDistIncludeInvLevel = ReadBool(settings, DistInvLevelKey, LastDistIncludeInvLevel);
+
+            RecentQuoteKeys.Clear();
+            if (settings?.Get(RecentQuoteKeysKey) is string recentQuotes && !string.IsNullOrEmpty(recentQuotes))
+            {
+                RecentQuoteKeys.AddRange(recentQuotes.Split('|', StringSplitOptions.RemoveEmptyEntries));
+            }
             return Task.FromResult(0);
         }
 
@@ -122,6 +157,7 @@ namespace SSI_ArcGIS_Addin
             settings.Add(DistInfoSourceKey, LastDistIncludeInfoSource.ToString());
             settings.Add(DistDateKey, LastDistIncludeDate.ToString());
             settings.Add(DistInvLevelKey, LastDistIncludeInvLevel.ToString());
+            settings.Add(RecentQuoteKeysKey, string.Join("|", RecentQuoteKeys));
             return Task.FromResult(0);
         }
 

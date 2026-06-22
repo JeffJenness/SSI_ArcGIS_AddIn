@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using ArcGIS.Desktop.Framework.Contracts;
 using MessageBox = ArcGIS.Desktop.Framework.Dialogs.MessageBox;
@@ -30,7 +32,18 @@ namespace SSI_ArcGIS_Addin
                     return;
                 }
 
-                QuoteEntry pick = quotes[Rng.Next(quotes.Count)];
+                // Avoid repeating any of the last MaxRecentQuotes shown (tracked
+                // with the project). With 108 quotes and a 50-deep history the pool
+                // is never empty, but fall back to the full set just in case.
+                var recent = new HashSet<string>(Module1.RecentQuoteKeys);
+                List<QuoteEntry> pool = quotes.Where(q => !recent.Contains(QuoteKey(q))).ToList();
+                if (pool.Count == 0)
+                {
+                    pool = quotes;
+                }
+
+                QuoteEntry pick = pool[Rng.Next(pool.Count)];
+                Module1.RecordRecentQuote(QuoteKey(pick));
                 QuoteWindow.ShowQuote(pick.Quote, pick.Author);
             }
             catch (Exception ex)
@@ -64,6 +77,25 @@ namespace SSI_ArcGIS_Addin
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
             _quotes = JsonSerializer.Deserialize<List<QuoteEntry>>(json, options) ?? new List<QuoteEntry>();
             return _quotes;
+        }
+
+        /// <summary>
+        /// A stable identity for a quote, used to track recently shown ones across
+        /// sessions. Uses a deterministic FNV-1a hash of the text (string.GetHashCode
+        /// is randomized per process and cannot be persisted).
+        /// </summary>
+        private static string QuoteKey(QuoteEntry entry)
+        {
+            string text = (entry.Quote ?? string.Empty) + (char)1 + (entry.Author ?? string.Empty);
+            const ulong offset = 14695981039346656037UL;
+            const ulong prime = 1099511628211UL;
+            ulong hash = offset;
+            foreach (byte b in Encoding.UTF8.GetBytes(text))
+            {
+                hash ^= b;
+                hash *= prime;
+            }
+            return hash.ToString("x16");
         }
 
         /// <summary>One entry from Inspirational_Quotes.json.</summary>
