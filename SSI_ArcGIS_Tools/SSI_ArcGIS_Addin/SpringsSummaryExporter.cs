@@ -165,6 +165,35 @@ namespace SSI_ArcGIS_Addin
             }
         }
 
+        /// <summary>
+        /// Every dataset name this summary build will create for a given summary
+        /// feature class name: the summary feature class, its eight supporting
+        /// tables, and the eight relationship classes. Used by the Export
+        /// Geodatabase pre-flight path-length check. MUST stay in sync with
+        /// <see cref="BuildSupportingTables"/> and
+        /// <see cref="CreateSummaryRelationshipClasses"/>.
+        /// </summary>
+        internal static IReadOnlyList<string> PredictedDatasetNames(string summaryName)
+        {
+            return new[]
+            {
+                summaryName,
+                summaryName + "_Surveys",
+                summaryName + "_Solar_by_Site_Append",
+                summaryName + "_TaxaVert_by_Site", summaryName + "_TaxaVert_by_Survey",
+                summaryName + "_TaxaInvert_by_Site", summaryName + "_TaxaInvert_by_Survey",
+                summaryName + "_TaxaFlora_by_Site", summaryName + "_TaxaFlora_by_Survey",
+                summaryName + "_RC_Surveys_by_Site",
+                summaryName + "_RC_Solar_by_Site",
+                summaryName + "_RC_Sites_to_Verts",
+                summaryName + "_RC_Sites_to_Inverts",
+                summaryName + "_RC_Sites_to_Flora",
+                summaryName + "_RC_Surveys_to_Verts",
+                summaryName + "_RC_Surveys_to_Inverts",
+                summaryName + "_RC_Surveys_to_Flora",
+            };
+        }
+
         // --- schema ----------------------------------------------------------
 
         private static void CreateSummarySchema(Geodatabase gdb, FeatureClass springs, string name)

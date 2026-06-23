@@ -44,6 +44,16 @@ namespace SSI_ArcGIS_Addin
 
             string outputGdbPath = MakeUniqueGeodatabasePath(_p.OutputFolder, _p.OutputName);
             OutputGeodatabasePath = outputGdbPath;
+
+            // Pre-flight: a file geodatabase requires every dataset's full catalog
+            // path to be under 252 characters. Fail early (before creating the
+            // geodatabase) with an actionable message instead of partway through.
+            string pathError = CheckDatasetPathLengths(outputGdbPath, _p.OutputName, _p.CreateSummary);
+            if (pathError != null)
+            {
+                throw new InvalidOperationException(pathError);
+            }
+
             var outputConnection = new FileGeodatabaseConnectionPath(new Uri(outputGdbPath));
 
             using var outputGdb = SchemaBuilder.CreateGeodatabase(outputConnection);
@@ -535,6 +545,64 @@ namespace SSI_ArcGIS_Addin
 
             created.Add(result.Name);
             report.AppendLine($"- {result.Name}: {result.RecordCount:N0} record(s)");
+        }
+
+        // File geodatabases require every dataset's full catalog path
+        // (gdb path + "\" + dataset name) to be under this many characters.
+        private const int MaxFileGdbDatasetPathLength = 252;
+
+        /// <summary>
+        /// Checks that the longest dataset this export will create still has a full
+        /// catalog path under the file-geodatabase limit. Returns a user-facing
+        /// error message (naming the offending path and how much to trim), or null
+        /// if everything fits.
+        /// </summary>
+        private static string CheckDatasetPathLengths(string outputGdbPath, string outputName, bool createSummary)
+        {
+            string longestName = LongestCreatedDatasetName(outputName, createSummary);
+            string longestPath = outputGdbPath + "\\" + longestName;
+            if (longestPath.Length < MaxFileGdbDatasetPathLength)
+            {
+                return null;
+            }
+
+            int excess = longestPath.Length - (MaxFileGdbDatasetPathLength - 1);
+            return
+                "The output location is too long." + Environment.NewLine + Environment.NewLine +
+                "A file geodatabase requires every dataset's full path to be under " +
+                $"{MaxFileGdbDatasetPathLength} characters, but the longest dataset this export would " +
+                $"create is {longestPath.Length} characters:" + Environment.NewLine + Environment.NewLine +
+                longestPath + Environment.NewLine + Environment.NewLine +
+                $"Shorten the output folder and/or geodatabase name by at least {excess} character(s)" +
+                (createSummary
+                    ? ", or turn off \"Create summary\" (its datasets have the longest names)."
+                    : ".");
+        }
+
+        /// <summary>
+        /// The longest dataset name this export will create: the springs feature
+        /// class (renamed to the output name), the copied datasets, the relationship
+        /// classes, and — when requested — the summary datasets.
+        /// </summary>
+        private static string LongestCreatedDatasetName(string outputName, bool createSummary)
+        {
+            string longest = outputName ?? string.Empty; // springs FC is renamed to the output name
+            foreach (CopyOperation op in SpringsExportSchema.CopyOperations)
+            {
+                if (op.SourceName.Length > longest.Length) { longest = op.SourceName; }
+            }
+            foreach (RelationshipDef rc in SpringsExportSchema.RelationshipClasses)
+            {
+                if (rc.Name.Length > longest.Length) { longest = rc.Name; }
+            }
+            if (createSummary)
+            {
+                foreach (string name in SpringsSummaryExporter.PredictedDatasetNames(outputName + "_Summary"))
+                {
+                    if (name.Length > longest.Length) { longest = name; }
+                }
+            }
+            return longest;
         }
 
         private static string MakeUniqueGeodatabasePath(string folder, string baseName)

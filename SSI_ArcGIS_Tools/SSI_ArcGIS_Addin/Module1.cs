@@ -46,9 +46,9 @@ namespace SSI_ArcGIS_Addin
         private const string DistInvLevelKey = "SpringDistance_IncludeInvLevel";
 
         // Thought for the Day: keys of recently shown quotes, so they are not
-        // repeated until 50 others have been shown.
+        // repeated until 100 others have been shown.
         private const string RecentQuoteKeysKey = "ThoughtForTheDay_RecentQuoteKeys";
-        public const int MaxRecentQuotes = 50;
+        public const int MaxRecentQuotes = 100;
 
         /// <summary>
         /// Last-used Export Subset of Springs dialog choices. Held for the session
