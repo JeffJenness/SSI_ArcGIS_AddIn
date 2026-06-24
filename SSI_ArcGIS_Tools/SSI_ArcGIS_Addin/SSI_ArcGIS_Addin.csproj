@@ -37,6 +37,11 @@
       <Link>Metadata\%(RecursiveDir)%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <!-- Layer-file template(s) for the summary feature class, deployed next to the
+         assembly so the export tool can retarget and emit a .lyrx. -->
+    <Content Include="LayerTemplates\*.lyrx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\launchSettings.json" />

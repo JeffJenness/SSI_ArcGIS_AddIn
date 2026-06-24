@@ -5,7 +5,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://schemas.esri.com/DADF/Registry file:///C:/Program%20Files/ArcGIS/Pro/bin/ArcGIS.Desktop.Framework.xsd">
 
-  <AddInInfo id="{738e31ff-cf24-451e-88f9-2e82c4fc833f}" version="1.6.8" desktopVersion="3.7.1901" product="ArcGISPro">
+  <AddInInfo id="{738e31ff-cf24-451e-88f9-2e82c4fc833f}" version="1.6.9" desktopVersion="3.7.1901" product="ArcGISPro">
     <Name>SSI_ArcGIS_Addin</Name>   
     <Description>Tools to aid in Springs Stewardship GIS projects.</Description>
     <Image>Images\AddInIcon_32.png</Image>

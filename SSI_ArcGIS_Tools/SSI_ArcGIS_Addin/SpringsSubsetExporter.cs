@@ -139,6 +139,13 @@ namespace SSI_ArcGIS_Addin
                         $"- {summary.Name}: {summary.RecordCount:N0} summary record(s)" +
                         $" + {summary.SupportingTableCount} supporting table(s)" +
                         $" + {summary.RelationshipClassCount} relationship class(es)");
+
+                    // Layer files that symbolize the summary FC (relative path to this
+                    // gdb). Only when the summary was actually created.
+                    foreach (string layerFile in SummaryLayerFileWriter.Write(outputGdbPath, summary.Name))
+                    {
+                        report.AppendLine($"- Layer file: {Path.GetFileName(layerFile)}");
+                    }
                 }
                 else
                 {
@@ -159,6 +166,16 @@ namespace SSI_ArcGIS_Addin
 
                 report.AppendLine(SpringsMetadataWriter.Write(
                     outputGdb, outputGdbPath, _p.OutputName, summaryName, metadataDatasets, progressor));
+            }
+
+            // 8) Springs layer files (single symbol + inventory level), symbolizing
+            // the primary springs FC. Always written when the springs FC was created.
+            if (springs.Created)
+            {
+                foreach (string layerFile in SpringsLayerFileWriter.Write(outputGdbPath, _p.OutputName))
+                {
+                    report.AppendLine($"- Layer file: {Path.GetFileName(layerFile)}");
+                }
             }
 
             stopwatch.Stop();

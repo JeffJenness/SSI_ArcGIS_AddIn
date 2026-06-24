@@ -498,6 +498,18 @@ namespace SSI_ArcGIS_Addin
             return values.Count > 0 ? SummaryStats.MeanAndStdDev(values).Mean : (double?)null;
         }
 
+        /// <summary>
+        /// Normalizes a CastWQParameter for matching: the specific-conductance code
+        /// is stored with the micro sign (U+00B5) or Greek mu (U+03BC) in the data
+        /// (e.g. "…(µS/cm)"), but the SpecCond*Code constants use an ASCII 'u'.
+        /// Folding both micro variants to 'u' makes the match succeed regardless of
+        /// which character the source uses. (Other parameters contain no µ.)
+        /// </summary>
+        private static string NormalizeWqParameter(string parameter)
+        {
+            return parameter?.Replace((char)0x00B5, 'u').Replace((char)0x03BC, 'u');
+        }
+
         private static void AddWaterQuality(
             Dictionary<string, List<object[]>> wqBySurvey, string surveyKey,
             List<double> specCond, List<double> ph, List<double> temp, List<double> alk)
@@ -520,7 +532,7 @@ namespace SSI_ArcGIS_Addin
                     continue;
                 }
 
-                switch (param)
+                switch (NormalizeWqParameter(param))
                 {
                     case AlkalinityCode: a.Add(measure); break;
                     case SpecCondFieldCode:
@@ -948,7 +960,7 @@ namespace SSI_ArcGIS_Addin
                         continue;
                     }
 
-                    switch (param)
+                    switch (NormalizeWqParameter(param))
                     {
                         case AlkalinityCode: alk.Add(m); break;
                         case SpecCondFieldCode:
