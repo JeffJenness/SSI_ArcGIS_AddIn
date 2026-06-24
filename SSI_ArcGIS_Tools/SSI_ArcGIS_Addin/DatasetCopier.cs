@@ -111,7 +111,8 @@ namespace SSI_ArcGIS_Addin
 
             return CopyCore(source, isFeatureClass: false, outputGdb, op.SourceName, queryFilter: null,
                 op.FilterSet, op.FilterField, op.Builds, op.ApplyExclusions,
-                trimStrings, store, progressor, keyFieldLengths, domains);
+                trimStrings, store, progressor, keyFieldLengths, domains,
+                op.FilterSet2, op.FilterField2);
         }
 
         // ---------------------------------------------------------------------
@@ -130,14 +131,16 @@ namespace SSI_ArcGIS_Addin
             KeepSetStore store,
             CancelableProgressor progressor,
             IReadOnlyDictionary<string, int> keyFieldLengths,
-            IReadOnlyDictionary<string, DomainDescription> domains)
+            IReadOnlyDictionary<string, DomainDescription> domains,
+            KeepSet? filterSet2 = null,
+            string filterField2 = null)
         {
             TableDefinition sourceDef = source.GetDefinition();
 
             // Field plan: which source fields to recreate and copy values for.
             (List<FieldDescription> fieldDescriptions, List<string> copyFields) =
                 PlanFields(sourceDef, trimStrings ? ScanMaxLengths(source, queryFilter, filterSet, filterField,
-                                                                   applyExclusions, store) : null,
+                                                                   applyExclusions, store, filterSet2, filterField2) : null,
                     keyFieldLengths, domains);
 
             // Create the output dataset.
@@ -169,13 +172,15 @@ namespace SSI_ArcGIS_Addin
                 using FeatureClass dest = outputGdb.OpenDataset<FeatureClass>(outputName);
                 string destShape = dest.GetDefinition().GetShapeField();
                 copied = CopyRows(source, dest, copyFields, queryFilter, filterSet, filterField,
-                    applyExclusions, builds, store, progressor, shapeFieldName, destShape);
+                    applyExclusions, builds, store, progressor, shapeFieldName, destShape,
+                    filterSet2, filterField2);
             }
             else
             {
                 using Table dest = outputGdb.OpenDataset<Table>(outputName);
                 copied = CopyRows(source, dest, copyFields, queryFilter, filterSet, filterField,
-                    applyExclusions, builds, store, progressor, null, null);
+                    applyExclusions, builds, store, progressor, null, null,
+                    filterSet2, filterField2);
             }
 
             return new DatasetCopyResult { Name = outputName, Created = true, RecordCount = copied };
@@ -269,7 +274,9 @@ namespace SSI_ArcGIS_Addin
             KeepSet? filterSet,
             string filterField,
             bool applyExclusions,
-            KeepSetStore store)
+            KeepSetStore store,
+            KeepSet? filterSet2 = null,
+            string filterField2 = null)
         {
             var maxLengths = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
             var textFields = new List<string>();
@@ -291,7 +298,7 @@ namespace SSI_ArcGIS_Addin
             while (cursor.MoveNext())
             {
                 using Row row = cursor.Current;
-                if (!Keep(row, filterSet, filterField, applyExclusions, store))
+                if (!Keep(row, filterSet, filterField, applyExclusions, store, filterSet2, filterField2))
                 {
                     continue;
                 }
@@ -320,7 +327,9 @@ namespace SSI_ArcGIS_Addin
             KeepSetStore store,
             CancelableProgressor progressor,
             string sourceShapeField,
-            string destShapeField)
+            string destShapeField,
+            KeepSet? filterSet2 = null,
+            string filterField2 = null)
         {
             long copied = 0;
             int sinceFlush = 0;
@@ -342,7 +351,7 @@ namespace SSI_ArcGIS_Addin
                 }
 
                 using Row row = cursor.Current;
-                if (!Keep(row, filterSet, filterField, applyExclusions, store))
+                if (!Keep(row, filterSet, filterField, applyExclusions, store, filterSet2, filterField2))
                 {
                     continue;
                 }
@@ -404,12 +413,24 @@ namespace SSI_ArcGIS_Addin
             KeepSet? filterSet,
             string filterField,
             bool applyExclusions,
-            KeepSetStore store)
+            KeepSetStore store,
+            KeepSet? filterSet2 = null,
+            string filterField2 = null)
         {
             if (filterSet.HasValue)
             {
                 string key = KeepSetStore.KeyString(row[filterField]);
                 if (key == null || !store.Contains(filterSet.Value, key))
+                {
+                    return false;
+                }
+            }
+
+            // Optional second keep-set filter, AND-ed with the first.
+            if (filterSet2.HasValue)
+            {
+                string key2 = KeepSetStore.KeyString(row[filterField2]);
+                if (key2 == null || !store.Contains(filterSet2.Value, key2))
                 {
                     return false;
                 }

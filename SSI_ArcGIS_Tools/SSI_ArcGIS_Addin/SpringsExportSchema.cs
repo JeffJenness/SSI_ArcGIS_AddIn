@@ -25,6 +25,12 @@ namespace SSI_ArcGIS_Addin
 
         /// <summary>Flora taxon IDs gathered from the five species-TID fields of gde_domveglevel1.</summary>
         FloraTIDs,
+
+        /// <summary>SurveyPolygonAutoID (PK) values of the kept tbl_PolygonSurvey rows; filters tbl_PolygonFlora.SurveyPolygonID.</summary>
+        PolygonAutoIDs,
+
+        /// <summary>SitePolygonID values of the kept tbl_PolygonSurvey rows; filters tbl_PolygonSite_Survey.PolygonID.</summary>
+        SitePolygonIDs,
     }
 
     /// <summary>
@@ -60,13 +66,17 @@ namespace SSI_ArcGIS_Addin
             KeepSet? filterSet,
             string filterField,
             IReadOnlyList<BuildSpec> builds = null,
-            bool applyExclusions = false)
+            bool applyExclusions = false,
+            KeepSet? filterSet2 = null,
+            string filterField2 = null)
         {
             SourceName = sourceName;
             FilterSet = filterSet;
             FilterField = filterField;
             Builds = builds ?? System.Array.Empty<BuildSpec>();
             ApplyExclusions = applyExclusions;
+            FilterSet2 = filterSet2;
+            FilterField2 = filterField2;
         }
 
         internal string SourceName { get; }
@@ -76,6 +86,17 @@ namespace SSI_ArcGIS_Addin
 
         /// <summary>Field in this dataset tested against <see cref="FilterSet"/>.</summary>
         internal string FilterField { get; }
+
+        /// <summary>
+        /// Optional second keep-set filter, AND-ed with the first. A row is kept
+        /// only if it also passes this one. Mirrors the legacy two-criteria deletes
+        /// (e.g. tbl_PolygonSite_Survey: SiteID in sites AND PolygonID in kept
+        /// polygon ids).
+        /// </summary>
+        internal KeepSet? FilterSet2 { get; }
+
+        /// <summary>Field tested against <see cref="FilterSet2"/>.</summary>
+        internal string FilterField2 { get; }
 
         internal IReadOnlyList<BuildSpec> Builds { get; }
 
@@ -152,10 +173,25 @@ namespace SSI_ArcGIS_Addin
             new CopyOperation("tbl_Surveys", KeepSet.SiteIDs, "SiteID",
                 new[] { new BuildSpec(KeepSet.SurveyIDs, "SurveyID") }, applyExclusions: true),
 
+            // Polygon surveys: filter by kept SurveyIDs and build the two polygon-id
+            // sets (SurveyPolygonAutoID and SitePolygonID) that tbl_PolygonFlora and
+            // tbl_PolygonSite_Survey filter against. Must run before those two so the
+            // sets exist when they are consumed.
+            new CopyOperation("tbl_PolygonSurvey", KeepSet.SurveyIDs, "SurveyID",
+                new[]
+                {
+                    new BuildSpec(KeepSet.PolygonAutoIDs, "SurveyPolygonAutoID"),
+                    new BuildSpec(KeepSet.SitePolygonIDs, "SitePolygonID"),
+                }),
+
             // Site-level tables (filter by SiteID).
             new CopyOperation("tbl_PolygonSite", KeepSet.SiteIDs, "SiteID"),
             new CopyOperation("tbl_Solar", KeepSet.SiteIDs, "SiteID"),
-            new CopyOperation("tbl_PolygonSite_Survey", KeepSet.SiteIDs, "SiteID"),
+            // Legacy keeps rows for kept sites AND whose PolygonID is a kept
+            // tbl_PolygonSurvey.SitePolygonID (a two-criteria delete), so AND a
+            // second keep-set filter on PolygonID.
+            new CopyOperation("tbl_PolygonSite_Survey", KeepSet.SiteIDs, "SiteID",
+                filterSet2: KeepSet.SitePolygonIDs, filterField2: "PolygonID"),
 
             // Survey-level tables (filter by SurveyID).
             new CopyOperation("tbl_reports", KeepSet.SurveyIDs, "SurveyID"),
@@ -165,7 +201,6 @@ namespace SSI_ArcGIS_Addin
             new CopyOperation("tbl_WQData", KeepSet.SurveyIDs, "SurveyID"),
             new CopyOperation("tbl_WQData_Location", KeepSet.SurveyIDs, "SurveyID"),
             new CopyOperation("tbl_SEAP_Scores", KeepSet.SurveyIDs, "SurveyID"),
-            new CopyOperation("tbl_PolygonSurvey", KeepSet.SurveyIDs, "SurveyID"),
             new CopyOperation("tbl_InvertSampling", KeepSet.SurveyIDs, "SurveyID"),
             new CopyOperation("tbl_flow", KeepSet.SurveyIDs, "SurveyID"),
             new CopyOperation("tbl_HydroQuality", KeepSet.SurveyIDs, "SurveyID"),
@@ -173,8 +208,13 @@ namespace SSI_ArcGIS_Addin
             new CopyOperation("gde_disturbance", KeepSet.SurveyIDs, "SurveyID"),
             new CopyOperation("gde_mgmtindicators", KeepSet.SurveyIDs, "SurveyID"),
 
+            // Polygon flora: keep only rows whose SurveyPolygonID is a kept
+            // tbl_PolygonSurvey.SurveyPolygonAutoID (legacy copies all, then deletes
+            // the rest). Was previously an unfiltered full copy — the bug that left
+            // the Pro output with every flora row instead of the subset.
+            new CopyOperation("tbl_PolygonFlora", KeepSet.PolygonAutoIDs, "SurveyPolygonID"),
+
             // Lookup tables copied in full (no filter).
-            new CopyOperation("tbl_PolygonFlora", null, null),
             new CopyOperation("tlu_TaxaVert", null, null),
             new CopyOperation("tlu_TaxaInvert", null, null),
             new CopyOperation("tlu_flowrate", null, null),
@@ -281,6 +321,19 @@ namespace SSI_ArcGIS_Addin
             new CopyOperation("tlu_globalconservationstatus_GDE", null, null),
             new CopyOperation("tlu_nativestatuscodes_GDE", null, null),
             new CopyOperation("tlu_protectedarea_GDE", null, null),
+            // The remaining Flora-GDE lookups, copied in full like the three above
+            // (legacy "COPY ENTIRE … TABLE" calls). These were missing, so their
+            // by_Flora_GDE relationship classes (defined below) had no destination
+            // table and were silently skipped.
+            new CopyOperation("tlu_wetlandstatus_les_GDE", null, null),
+            new CopyOperation("tlu_endemism_GDE", null, null),
+            new CopyOperation("tlu_springmicrohabitatuse_GDE", null, null),
+            new CopyOperation("tlu_springlifehistory_GDE", null, null),
+            new CopyOperation("tlu_aquaticstatus_GDE", null, null),
+            new CopyOperation("tlu_esastatus_GDE", null, null),
+            new CopyOperation("tlu_covercodes_TaxaFlora_GDE", null, null),
+            new CopyOperation("tlu_iucnstatus_GDE", null, null),
+            new CopyOperation("tlu_ntnlconservationstatus_GDE", null, null),
         };
 
         // --- Relationship classes -------------------------------------------

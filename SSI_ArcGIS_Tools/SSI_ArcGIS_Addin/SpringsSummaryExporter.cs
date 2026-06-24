@@ -38,7 +38,9 @@ namespace SSI_ArcGIS_Addin
 
         // Full taxon field sets for the by_Site / by_Survey taxa tables. Counting
         // indices are unchanged from the lookup loads: vert/invert order=2,family=3,
-        // genus=4,species=5; flora order=-1,family=6,genus=8,species=9.
+        // genus=4,species=5; flora order=-1,family=6,genus=8,species=1 (FloraSpecies -
+        // the legacy counts on "FloraSpecies", which is populated, not the bare
+        // "Species" epithet at index 9 which is frequently blank).
         private static readonly string[] TaxaVertFields =
         {
             "TID", "FaunaCommonName", "FaunaOrder", "FaunaFamily", "FaunaGenus", "FaunaSpecies",
@@ -310,8 +312,10 @@ namespace SSI_ArcGIS_Addin
                 buffer[shapeField] = feature.GetShape();
 
                 string siteKey = KeepSetStore.KeyString(feature["SiteID"]);
-                string shortName = AsString(SafeGet(feature, "ShortName"));
-                ComputeAndWrite(buffer, siteKey, siteKey, shortName, ctx);
+                // The image caption uses the full site name (legacy strRunningSiteName),
+                // not the abbreviated ShortName.
+                string siteName = AsString(SafeGet(feature, "SiteName"));
+                ComputeAndWrite(buffer, siteKey, siteKey, siteName, ctx);
 
                 insert.Insert(buffer);
                 written++;
@@ -327,7 +331,7 @@ namespace SSI_ArcGIS_Addin
         }
 
         private static void ComputeAndWrite(
-            RowBuffer buffer, string siteKey, string siteIdText, string shortName, RollupContext ctx)
+            RowBuffer buffer, string siteKey, string siteIdText, string siteName, RollupContext ctx)
         {
             List<object[]> surveys = ctx.SurveysBySite.TryGetValue(siteKey ?? string.Empty, out var s)
                 ? s : new List<object[]>();
@@ -391,7 +395,7 @@ namespace SSI_ArcGIS_Addin
                         if (type != null && type.Equals("representative", StringComparison.OrdinalIgnoreCase))
                         {
                             imageLink = AsString(img[1]) ?? string.Empty;
-                            imageCaption = BuildCaption(shortName, siteIdText, AsString(survey[5]), survey[2]);
+                            imageCaption = BuildCaption(siteName, siteIdText, AsString(survey[5]), survey[2]);
                         }
                     }
                 }
@@ -408,7 +412,7 @@ namespace SSI_ArcGIS_Addin
 
             var vertCounts = SpeciesCounter.Count(siteVerts.Values.ToList(), 2, 3, 4, 5);
             var invertCounts = SpeciesCounter.Count(siteInverts.Values.ToList(), 2, 3, 4, 5);
-            var floraCounts = SpeciesCounter.Count(siteFlora.Values.ToList(), -1, 6, 8, 9);
+            var floraCounts = SpeciesCounter.Count(siteFlora.Values.ToList(), -1, 6, 8, 1);
 
             buffer["Vert_Species_Count"] = vertCounts.Species;
             buffer["Vert_Genus_Count"] = vertCounts.Genus;
@@ -448,7 +452,9 @@ namespace SSI_ArcGIS_Addin
         {
             if (flowCount <= 0 || x.Count < 2)
             {
-                buffer["Flow_Sample_Range_Days"] = null;
+                // Legacy defaults the range to 0 (a Long initialized to 0) when it
+                // can't be computed; the regression stats stay null.
+                buffer["Flow_Sample_Range_Days"] = 0;
                 buffer["Flow_Regression_Slope"] = null;
                 buffer["Flow_Regression_R2"] = null;
                 buffer["Flow_Regression_AdjR2"] = null;
@@ -615,20 +621,22 @@ namespace SSI_ArcGIS_Addin
             }
         }
 
-        private static string BuildCaption(string shortName, string siteId, string surveyors, object surveyDate)
+        private static string BuildCaption(string siteName, string siteId, string surveyors, object surveyDate)
         {
             string caption =
                 "Image from Springs Stewardship Institute Online Database (Springs Online, https://springsdata.org/).  " +
-                $"Survey conducted at {shortName} [Site ID {siteId}]";
+                $"Survey conducted at {siteName} [Site ID {siteId}]";
 
             if (!string.IsNullOrWhiteSpace(surveyors))
             {
                 caption += $", by {surveyors}";
             }
 
+            // Long date, matching the legacy Format(date, "long date") -> e.g.
+            // "Thursday, September 21, 2017".
             if (surveyDate is DateTime date && date.Year != 1000)
             {
-                caption += $" on {date:M/d/yyyy}";
+                caption += " on " + date.ToString("dddd, MMMM d, yyyy", CultureInfo.InvariantCulture);
             }
 
             return caption + ".";
@@ -892,7 +900,9 @@ namespace SSI_ArcGIS_Addin
                     buffer["SurveyID"] = survey[1];
                     buffer["SurveyDate"] = survey[2];
                     buffer["Project"] = survey[3];
-                    buffer["TotalAreaSQM"] = TryDouble(survey[4], out double area) ? area : (object)null;
+                    // 0 (or unparseable) area is treated as missing -> null, matching
+                    // the feature-class rollup and the legacy.
+                    buffer["TotalAreaSQM"] = TryDouble(survey[4], out double area) && area != 0 ? area : (object)null;
                     buffer["CastSurveyors"] = survey[5];
                     buffer["Site_GlobalID"] = guid;
 
@@ -961,7 +971,7 @@ namespace SSI_ArcGIS_Addin
 
             var vc = SpeciesCounter.Count(verts, 2, 3, 4, 5);
             var ic = SpeciesCounter.Count(inverts, 2, 3, 4, 5);
-            var fc = SpeciesCounter.Count(flora, -1, 6, 8, 9);
+            var fc = SpeciesCounter.Count(flora, -1, 6, 8, 1);
 
             buffer["Vert_Species_Count"] = vc.Species;
             buffer["Vert_Genus_Count"] = vc.Genus;
