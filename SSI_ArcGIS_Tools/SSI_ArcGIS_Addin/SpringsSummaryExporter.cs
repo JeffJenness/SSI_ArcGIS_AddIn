@@ -452,9 +452,10 @@ namespace SSI_ArcGIS_Addin
         {
             if (flowCount <= 0 || x.Count < 2)
             {
-                // Legacy defaults the range to 0 (a Long initialized to 0) when it
-                // can't be computed; the regression stats stay null.
-                buffer["Flow_Sample_Range_Days"] = 0;
+                // Legacy: null when there is NO flow data at all, but 0 when flow
+                // exists yet the range is uncomputable (<2 dated samples). Regression
+                // stats stay null either way.
+                buffer["Flow_Sample_Range_Days"] = flowCount <= 0 ? (object)null : 0;
                 buffer["Flow_Regression_Slope"] = null;
                 buffer["Flow_Regression_R2"] = null;
                 buffer["Flow_Regression_AdjR2"] = null;
